@@ -19,4 +19,6 @@ public interface List<E> extends Iterable<E> {
     boolean add(E Element, int index);
     void clear();
     
+    int indexOf(E Element);
+    
 }

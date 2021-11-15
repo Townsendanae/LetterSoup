@@ -128,6 +128,7 @@ public class CircularDoublyLinkedList<E> implements List<E>{
 
     @Override
     public Iterator<E> iterator() {
+        if(isEmpty()) throw new EmptyListException();
         return new Iterator<E>(){
             
             CircularDoublyNodeList<E> node = last.getNext();
@@ -192,6 +193,23 @@ public class CircularDoublyLinkedList<E> implements List<E>{
     
     public void moveBackwards(){
         last = last.getNext();
+    }
+
+    @Override
+    public int indexOf(E e) {
+        if(e == null) return -2;
+        if(isEmpty()) throw new EmptyListException();
+        if(e == last.getContent()) return size()-1;
+        
+        CircularDoublyNodeList<E> node = last.getNext();
+        int index = 0;
+        while(node != last){
+            if(node.getContent() == e) return index;
+            index++;
+            node = node.getNext();
+        }
+        
+        return -2;
     }
 }
 
