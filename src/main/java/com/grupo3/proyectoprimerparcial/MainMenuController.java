@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,10 +58,6 @@ public class MainMenuController implements Initializable{
             pane.setOnMouseReleased(mouseEnteredButton);
         }
         cambiarIdioma();
-    }
-
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
     }
 
     EventHandler<MouseEvent> mouseEnteredButton = (event) -> {
@@ -152,7 +149,7 @@ public class MainMenuController implements Initializable{
     }
     
     @FXML
-    private void empezarPartida(MouseEvent event) {
+    private void empezarPartida(MouseEvent event) throws IOException {
         
         Idiomas idioma = (Idiomas) language.getUserData();
         int n_filas = Integer.parseInt(rowsLabel.getText());
@@ -160,6 +157,8 @@ public class MainMenuController implements Initializable{
         
         if(jugadores == 1) Partida.nuevaPartidaUnJugador(idioma, n_filas, n_columnas);
         else Partida.nuevaPartidaDosJugadores(idioma, n_filas, n_columnas);
+        
+        App.setRoot("secondary");
         
     }
 
