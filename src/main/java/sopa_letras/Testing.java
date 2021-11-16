@@ -4,13 +4,16 @@ package sopa_letras;
 import TDAs.ArrayList;
 import TDAs.CircularDoublyLinkedList;
 import java.util.Iterator;
+import partida.Idiomas;
 import partida.Jugador;
+import partida.Partida;
 
 public class Testing {
     
     public static void main(String[] args){
         
-        Sopa sopa = new Sopa(8,10);
+        Partida.nuevaPartidaUnJugador(Idiomas.SPANISH, 8, 8);
+        Sopa sopa = Partida.sopa;
         
         Iterator<CircularDoublyLinkedList> it = sopa.getSopa().iterator();
         while(it.hasNext()){
@@ -30,7 +33,7 @@ public class Testing {
             System.out.println(it2.next());
         }
         
-        Jugador jugador = new Jugador();
+        Jugador jugador = Partida.jugadorUno;
         Letra l1 = new Letra('A', 6, 1);
         Letra l2 = new Letra('L', 5, 2);
         Letra l3 = new Letra('O', 4, 3);

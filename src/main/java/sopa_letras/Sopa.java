@@ -6,13 +6,14 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.Random;
+import partida.Partida;
 
 public class Sopa {
     
     int n_filas;
     int n_columnas;
     private final CircularDoublyLinkedList<CircularDoublyLinkedList> sopa;
-    private static final String CHARS = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    private final String CHARS = Partida.idioma.chars;
     
     public Sopa(int n_filas, int n_columnas){
         this.n_filas = n_filas;

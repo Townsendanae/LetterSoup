@@ -32,10 +32,6 @@ public class Jugador {
         palabras_encontradas.addLast(palabra);
     }
     
-    public boolean yaEncontrada(Palabra palabra){
-        return palabras_encontradas.contains(palabra);
-    }
-    
     public void quitarVida(){
         vidas--;
     }

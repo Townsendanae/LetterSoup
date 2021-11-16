@@ -1,0 +1,11 @@
+
+
+#BackgroundPane{
+    -fx-background-image: url('menu_images/bg.png');
+    -fx-background-size: 100% 100%;
+}
+
+#panes{
+    -fx-background-color: black;
+}
+

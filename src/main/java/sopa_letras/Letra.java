@@ -36,7 +36,7 @@ public class Letra implements Comparable<Letra>{
     
     @Override
     public String toString(){
-        return Character.toString(letra)+" "+fila+" "+columna;
+        return Character.toString(letra);
     }
 
     @Override

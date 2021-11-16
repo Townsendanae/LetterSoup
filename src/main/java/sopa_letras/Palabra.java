@@ -7,9 +7,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Objects;
 import partida.Jugador;
+import partida.Partida;
 
 public class Palabra {
-    private static final String PALABRAS = "resources/palabras.txt";
+    private final String PALABRAS = Partida.idioma.ruta;
     private final ArrayList<Letra> letras;
     private final Jugador jugador;
     
@@ -32,8 +33,8 @@ public class Palabra {
     private int getPuntos(){
         int puntos = letras.size();
         Intento intento = esValida(getOrientacion());
-        if(intento.equals(Intento.ACIERTO)) return puntos;
-        if(intento.equals(Intento.ERROR)) return -puntos;
+        if(intento == Intento.ACIERTO) return puntos;
+        if(intento == Intento.ERROR) return -puntos;
         return 0;
     }
     
@@ -103,14 +104,14 @@ public class Palabra {
     
     
     private Intento esValida(Orientacion o){
-        if(o.equals(Orientacion.OTRA)) return Intento.ERROR;
+        if(o == Orientacion.OTRA) return Intento.ERROR;
         else{
             StringBuilder palabra = new StringBuilder();
             for(Letra letra: letras){
                 palabra.append(letra.toString());
             }
             Intento intento = comprobarPalabra(palabra.toString());
-            if (intento.equals(Intento.ERROR)) return comprobarPalabra(palabra.reverse().toString());
+            if (intento == Intento.ERROR) return comprobarPalabra(palabra.reverse().toString());
             return intento;
         }
     }
@@ -131,9 +132,10 @@ public class Palabra {
                 linea = linea.replace("ú","u");
                 
                 if(linea.length() > 1 && linea.equals(palabra)){
-                    if(jugador.yaEncontrada(this)) return Intento.YA_ENCONTRADA;
+                    if(Partida.yaEncontrada(this)) return Intento.YA_ENCONTRADA;
                     
                     jugador.agregarPalabra(this);
+                    Partida.agregarPalabra(this);
                     return Intento.ACIERTO;
                 }
             }

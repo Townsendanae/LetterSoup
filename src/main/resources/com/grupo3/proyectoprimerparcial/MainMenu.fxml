@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane id="BackgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" stylesheets="@mainmenu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo3.proyectoprimerparcial.MainMenuController">
+   <children>
+      <Label layoutX="229.0" layoutY="273.0" text="FILAS">
+         <font>
+            <Font name="Tahoma Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="401.0" layoutY="273.0" text="COLUMNAS">
+         <font>
+            <Font name="Tahoma Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="columnsLabel" alignment="CENTER" layoutX="419.0" layoutY="308.0" prefHeight="35.0" prefWidth="56.0" text="8" textAlignment="CENTER">
+         <font>
+            <Font name="Tahoma Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="rowsLabel" alignment="CENTER" layoutX="224.0" layoutY="308.0" prefHeight="35.0" prefWidth="56.0" text="8" textAlignment="CENTER">
+         <font>
+            <Font name="Tahoma Bold" size="28.0" />
+         </font>
+      </Label>
+      <Pane id="panes" fx:id="minusRow" layoutX="180.0" layoutY="300.0" onMouseClicked="#minusRow" opacity="0.25" prefHeight="50.0" prefWidth="40.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Pane id="panes" fx:id="plusRow" layoutX="285.0" layoutY="300.0" onMouseClicked="#plusRow" opacity="0.25" prefHeight="50.0" prefWidth="40.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Pane id="panes" fx:id="minusColumn" layoutX="375.0" layoutY="300.0" onMouseClicked="#minusColumn" opacity="0.25" prefHeight="50.0" prefWidth="40.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Pane id="panes" fx:id="plusColumn" layoutX="480.0" layoutY="300.0" onMouseClicked="#plusColumn" opacity="0.25" prefHeight="50.0" prefWidth="40.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Pane id="panes" fx:id="previousLanguage" layoutX="385.0" layoutY="410.0" onMouseClicked="#previousLanguage" opacity="0.25" prefHeight="85.0" prefWidth="45.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Pane id="panes" fx:id="nextLanguage" layoutX="570.0" layoutY="410.0" onMouseClicked="#nextLanguage" opacity="0.25" prefHeight="85.0" prefWidth="45.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Pane id="panes" fx:id="goButton" layoutX="245.0" layoutY="550.0" onMouseClicked="#empezarPartida" opacity="0.25" prefHeight="95.0" prefWidth="205.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Pane fx:id="language" layoutX="435.0" layoutY="415.0" prefHeight="75.0" prefWidth="130.0" />
+      <Pane id="panes" fx:id="singleplayer" layoutX="105.0" layoutY="410.0" onMouseClicked="#singleplayer" opacity="0.0" prefHeight="85.0" prefWidth="95.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Pane id="panes" fx:id="multiplayer" layoutX="205.0" layoutY="410.0" onMouseClicked="#multiplayer" opacity="0.85" prefHeight="85.0" prefWidth="105.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+   </children>
+</Pane>
