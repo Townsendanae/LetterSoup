@@ -1,1 +1,4 @@
-
+#vida{
+    -fx-background-image: url('sopa_images/heart.png');
+    -fx-background-size: 100% 100%;
+}

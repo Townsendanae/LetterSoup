@@ -14,13 +14,16 @@ public abstract class Partida {
     public static ArrayList<Palabra> encontradas = new ArrayList();
     
     public static void nuevaPartidaUnJugador(Idiomas i, int n_filas, int n_columnas){
+        encontradas.clear();
         idioma = i;
         jugadorUno = new Jugador();
+        jugadorDos = null;
         sopa = new Sopa(n_filas, n_columnas);
         
     }
     
     public static void nuevaPartidaDosJugadores(Idiomas i, int n_filas, int n_columnas){
+        encontradas.clear();
         idioma = i;
         jugadorUno = new Jugador();
         jugadorDos = new Jugador();

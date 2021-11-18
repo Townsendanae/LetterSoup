@@ -129,5 +129,14 @@ public class Sopa {
         }
         n_columnas++;
     }
+
+    public int getN_filas() {
+        return n_filas;
+    }
+
+    public int getN_columnas() {
+        return n_columnas;
+    }
+    
     
 }

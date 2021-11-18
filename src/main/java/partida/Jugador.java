@@ -9,10 +9,12 @@ public class Jugador {
     private int puntos;
     private int vidas;
     private final ArrayList<Palabra> palabras_encontradas;
+    private int modificaciones;
     
     public Jugador() {
         palabras_encontradas = new ArrayList();
         vidas = 3;
+        modificaciones = 2;
     }
 
     public int getPuntos() {
@@ -38,6 +40,14 @@ public class Jugador {
     
     public int getVidas(){
         return vidas;
+    }
+    
+    public int getModificaciones(){
+        return modificaciones;
+    }
+    
+    public void modifica(){
+        modificaciones--;
     }
     
 }

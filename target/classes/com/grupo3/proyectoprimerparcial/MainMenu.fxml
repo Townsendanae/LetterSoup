@@ -63,7 +63,7 @@
          </cursor>
       </Pane>
       <Pane fx:id="language" layoutX="435.0" layoutY="415.0" prefHeight="75.0" prefWidth="130.0" />
-      <Pane id="panes" fx:id="singleplayer" layoutX="105.0" layoutY="410.0" onMouseClicked="#singleplayer" opacity="0.0" prefHeight="85.0" prefWidth="95.0">
+      <Pane id="panes" fx:id="singleplayer" layoutX="105.0" layoutY="410.0" onMouseClicked="#singleplayer" opacity="0.25" prefHeight="85.0" prefWidth="95.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

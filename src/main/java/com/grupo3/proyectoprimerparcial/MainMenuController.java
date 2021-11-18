@@ -157,7 +157,7 @@ public class MainMenuController implements Initializable{
         if(jugadores == 1) Partida.nuevaPartidaUnJugador(idioma, n_filas, n_columnas);
         else Partida.nuevaPartidaDosJugadores(idioma, n_filas, n_columnas);
         
-        App.setRoot("secondary");
+        App.setRoot("Sopa");
         
     }
 

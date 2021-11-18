@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" stylesheets="@sopa.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo3.proyectoprimerparcial.SopaController">
+   <center>
+      <AnchorPane id="panelCentral" fx:id="panelCentral" prefHeight="500.0" prefWidth="500.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitToMenu" text="Menú" />
+               </children>
+            </Pane>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="500.0">
+               <children>
+                  <HBox prefHeight="70.0" prefWidth="200.0">
+                     <children>
+                        <VBox prefHeight="70.0" prefWidth="250.0">
+                           <children>
+                              <HBox alignment="BOTTOM_LEFT" prefHeight="35.0" prefWidth="250.0">
+                                 <children>
+                                    <Label text="VIDAS :  ">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox fx:id="vidasJ1" prefHeight="35.0" prefWidth="83.0" spacing="10.0">
+                                       <children>
+                                          <Pane id="vida" prefHeight="35.0" prefWidth="21.0" />
+                                          <Pane id="vida" prefHeight="35.0" prefWidth="21.0" />
+                                          <Pane id="vida" prefHeight="35.0" prefWidth="21.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="250.0">
+                                 <children>
+                                    <Label text="PALABRAS : ">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="19.0" prefWidth="32.0" text="0" textFill="#00027c">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="PUNTOS : ">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="19.0" prefWidth="32.0" text="0" textFill="#00027c">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="playerTwoPane" prefHeight="70.0" prefWidth="250.0">
+                           <children>
+                              <HBox alignment="BOTTOM_LEFT" prefHeight="35.0" prefWidth="250.0">
+                                 <children>
+                                    <Label text="VIDAS :  ">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox fx:id="vidasJ2" prefHeight="35.0" prefWidth="83.0" spacing="10.0">
+                                       <children>
+                                          <Pane id="vida" prefHeight="35.0" prefWidth="21.0" />
+                                          <Pane id="vida" prefHeight="35.0" prefWidth="21.0" />
+                                          <Pane id="vida" prefHeight="35.0" prefWidth="21.0" />
+                                       </children>
+                                    </HBox>
+                                 </children></HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="250.0">
+                                 <children>
+                                    <Label text="PALABRAS : ">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="19.0" prefWidth="32.0" text="0" textFill="#00027c">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="PUNTOS : ">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label prefHeight="19.0" prefWidth="32.0" text="0" textFill="#00027c">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children></HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="topHBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+         </children></HBox>
+   </top>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="100.0" />
+            <VBox prefHeight="200.0" prefWidth="500.0">
+               <children>
+                  <HBox fx:id="bottomHBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="200.0" />
+                  <HBox fx:id="buttons" alignment="CENTER" prefHeight="70.0" prefWidth="500.0" spacing="30.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#agregarFila" text="Agregar FIla" />
+                        <Button mnemonicParsing="false" onAction="#eliminarFila" text="Eliminar FIla" />
+                        <Button mnemonicParsing="false" onAction="#agregarColumna" text="Agregar Columna" />
+                        <Button mnemonicParsing="false" onAction="#eliminarColumna" text="Eliminar Columna" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children></HBox>
+   </bottom>
+   <left>
+      <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox fx:id="leftVBox" prefHeight="200.0" prefWidth="30.0" />
+         </children>
+      </HBox>
+   </left>
+   <right>
+      <HBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox fx:id="rightVBox" prefHeight="200.0" prefWidth="30.0" />
+         </children>
+      </HBox>
+   </right>
+</BorderPane>
