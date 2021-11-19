@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -72,6 +73,8 @@ public class SopaController implements Initializable {
         panelCentral.getChildren().clear();
         leftVBox.getChildren().clear();
         rightVBox.getChildren().clear();
+        topHBox.getChildren().clear();
+        bottomHBox.getChildren().clear();
         
         //Creo mi gridpane que muestra mi sopa de letras
         gridpane=new GridPane();
@@ -89,14 +92,14 @@ public class SopaController implements Initializable {
             
             CircularDoublyLinkedList<Letra> fila=sopaDeLetras.getSopa().get(y); //Obtengo mi lista que hace de fila
             
-            //creación botones para mover filas
+            //creación flechas para mover filas
             StackPane pane_2 = new StackPane();
             pane_2.setPrefHeight(height);
             pane_2.setCursor(Cursor.HAND);
             pane_2.setOpacity(0);
             pane_2.setUserData(y+1);
                 
-            Label flecha_izq = new Label("❮");
+            Label flecha_izq = new Label("⮜");
             flecha_izq.setStyle("-fx-font-size: "+tamaño_letra+"px;");
             flecha_izq.setMouseTransparent(true);
             
@@ -115,7 +118,7 @@ public class SopaController implements Initializable {
             pane_3.setOpacity(0);
             pane_3.setUserData(y+1);
                 
-            Label flecha_der = new Label("❯");
+            Label flecha_der = new Label("⮞");
             flecha_der.setStyle("-fx-font-size: "+tamaño_letra+"px;");
             flecha_der.setMouseTransparent(true);
             
@@ -127,7 +130,7 @@ public class SopaController implements Initializable {
             pane_3.setOnMouseEntered(mouseEnteredArrow);
             pane_3.setOnMouseExited(mouseExitedArrow);
             pane_3.setOnMouseClicked(moveRowForward);
-                    
+            
             for(int x=0;x<fila.size();x++){
                 int coordX=x;
                 int coordY=y;
@@ -139,6 +142,7 @@ public class SopaController implements Initializable {
                 pane.setPrefSize(width, height);
                 pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
                 pane.setCursor(Cursor.HAND);
+                pane.setUserData(l);
                 
                 Label contenedor=new Label(String.valueOf(c)); //Lo contengo en un label para mostrar
                 contenedor.setMouseTransparent(true);
@@ -160,6 +164,49 @@ public class SopaController implements Initializable {
             }
             
         }
+        
+        // Creación flechas para mover Columnas
+        for(int i = 0; i < sopaDeLetras.getN_columnas(); i++){
+            
+            StackPane pane_4 = new StackPane();
+            pane_4.setPrefSize(width, 30);
+            pane_4.setCursor(Cursor.HAND);
+            pane_4.setOpacity(0);
+            pane_4.setUserData(i+1);
+                
+            Label flecha_aba = new Label("⮟");
+            flecha_aba.setStyle("-fx-font-size: "+tamaño_letra*0.8+"px;");
+            flecha_aba.setMouseTransparent(true);
+            
+            pane_4.getChildren().add(flecha_aba);
+            StackPane.setAlignment(flecha_aba ,Pos.CENTER);
+            
+            bottomHBox.getChildren().add(pane_4);
+            
+            pane_4.setOnMouseEntered(mouseEnteredArrow);
+            pane_4.setOnMouseExited(mouseExitedArrow);
+            pane_4.setOnMouseClicked(moveColumnForward);
+            
+            StackPane pane_5 = new StackPane();
+            pane_5.setPrefSize(width, 30);
+            pane_5.setCursor(Cursor.HAND);
+            pane_5.setOpacity(0);
+            pane_5.setUserData(i+1);
+                
+            Label flecha_arr = new Label("⮝");
+            flecha_arr.setStyle("-fx-font-size: "+tamaño_letra*0.8+"px;");
+            flecha_arr.setMouseTransparent(true);
+            
+            pane_5.getChildren().add(flecha_arr);
+            StackPane.setAlignment(flecha_arr ,Pos.CENTER);
+            
+            topHBox.getChildren().add(pane_5);
+            
+            pane_5.setOnMouseEntered(mouseEnteredArrow);
+            pane_5.setOnMouseExited(mouseExitedArrow);
+            pane_5.setOnMouseClicked(moveColumnBackwards);
+        }
+        
         panelCentral.getChildren().add(gridpane);
         
     }
@@ -168,14 +215,44 @@ public class SopaController implements Initializable {
     // EVENT HANDLERS
     
     EventHandler<MouseEvent> mouseEnteredLetter = (event) -> {
+        
         StackPane p = (StackPane) event.getTarget();
-        p.setStyle(p.getStyle()+" -fx-background-color: #BFE1FF;");
+        Letra l = (Letra) p.getUserData();
+        int n_fila = l.getFila();
+        int n_columna = l.getColumna();
+        
+        if(modoEliminarColumna || modoAgregarColumna){
+            gridpane.getChildren().stream()
+                    .filter((Node n) -> ((Letra) n.getUserData()).getColumna() == n_columna)
+                    .forEach((Node n) -> n.setStyle(n.getStyle()+" -fx-background-color: #BFE1FF;"));
+        }else if(modoEliminarFila || modoAgregarFila){
+            gridpane.getChildren().stream()
+                    .filter((Node n) -> ((Letra) n.getUserData()).getFila() == n_fila)
+                    .forEach((Node n) -> n.setStyle(n.getStyle()+" -fx-background-color: #BFE1FF;"));
+        }else{
+            p.setStyle(p.getStyle()+" -fx-background-color: #BFE1FF;");
+        }
         event.consume();
     };
     
     EventHandler<MouseEvent> mouseExitedLetter = (event) -> {
         StackPane p = (StackPane) event.getTarget();
-        p.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
+        Letra l = (Letra) p.getUserData();
+        int n_fila = l.getFila();
+        int n_columna = l.getColumna();
+        
+        if(modoEliminarColumna || modoAgregarColumna){
+            gridpane.getChildren().stream()
+                    .filter((Node n) -> ((Letra) n.getUserData()).getColumna() == n_columna)
+                    .forEach((Node n) -> n.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;"));
+        }else if(modoEliminarFila || modoAgregarFila){
+            gridpane.getChildren().stream()
+                    .filter((Node n) -> ((Letra) n.getUserData()).getFila() == n_fila)
+                    .forEach((Node n) -> n.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;"));
+        }else{
+            p.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
+        }
+        
         event.consume();
     };
     
@@ -205,6 +282,20 @@ public class SopaController implements Initializable {
         event.consume();
     };
     
+    EventHandler<MouseEvent> moveColumnForward = (event) -> {
+        StackPane p = (StackPane) event.getTarget();
+        Partida.sopa.avanzarColumna((Integer) p.getUserData());
+        refrescarSopa();
+        event.consume();
+    };
+    
+    EventHandler<MouseEvent> moveColumnBackwards = (event) -> {
+        StackPane p = (StackPane) event.getTarget();
+        Partida.sopa.retrocederColumna((Integer) p.getUserData());
+        refrescarSopa();
+        event.consume();
+    };
+    
     public void seleccionarLetra(Letra l,int posicionX, int posicionY){
         //Implementacion del click
     }
@@ -224,6 +315,14 @@ public class SopaController implements Initializable {
         else buttons.setDisable(false);
     }
 
+    private void quitarVidaJugadorActual(){
+        if(jugadorActual == Partida.jugadorUno){
+            vidasJ1.getChildren().remove(vidasJ1.getChildren().size()-1);
+        }else{
+            vidasJ2.getChildren().remove(vidasJ2.getChildren().size()-1);
+        }
+    }
+    
     @FXML
     private void exitToMenu(ActionEvent event) throws IOException {
         App.setRoot("MainMenu");
@@ -232,20 +331,24 @@ public class SopaController implements Initializable {
     @FXML
     private void agregarFila(ActionEvent event) {
         modoAgregarFila = !modoAgregarFila;
+        modoEliminarFila = modoAgregarColumna = modoEliminarColumna = false;
     }
 
     @FXML
     private void eliminarFila(ActionEvent event) {
         modoEliminarFila = !modoEliminarFila;
+        modoAgregarFila = modoAgregarColumna = modoEliminarColumna = false;
     }
 
     @FXML
     private void agregarColumna(ActionEvent event) {
         modoAgregarColumna = !modoAgregarColumna;
+        modoAgregarFila = modoEliminarFila = modoEliminarColumna = false;
     }
 
     @FXML
     private void eliminarColumna(ActionEvent event) {
         modoEliminarColumna = !modoEliminarColumna;
+        modoEliminarFila = modoAgregarFila = modoAgregarColumna = false;
     }
 }

@@ -56,6 +56,45 @@ public class Sopa {
         actualizarColumnas(fila, nfila);
     }
     
+    public void avanzarColumna(int ncolumna){
+        if(ncolumna > n_columnas || ncolumna < 1) return;
+        CircularDoublyLinkedList<Letra> columna = new CircularDoublyLinkedList();
+        
+        for(CircularDoublyLinkedList<Letra> fila: sopa){
+            Letra l = fila.get(ncolumna-1);
+            int nueva_fila = (l.getFila() == n_filas)?1:l.getFila()+1;
+            l.actualizarPosicion(nueva_fila, l.getColumna());
+            
+            columna.addLast(l);
+        }
+        
+        columna.moveForward();
+        for(int i = 0; i<sopa.size(); i++){
+            CircularDoublyLinkedList<Letra> fila = sopa.get(i);
+            fila.set(ncolumna-1, columna.get(i));
+        }
+        
+    }
+    
+    public void retrocederColumna(int ncolumna){
+        if(ncolumna > n_columnas || ncolumna < 1) return;
+        CircularDoublyLinkedList<Letra> columna = new CircularDoublyLinkedList();
+        
+        for(CircularDoublyLinkedList<Letra> fila: sopa){
+            Letra l = fila.get(ncolumna-1);
+            int nueva_fila = (l.getFila() == 1)?n_filas:l.getFila()-1;
+            l.actualizarPosicion(nueva_fila, l.getColumna());
+            
+            columna.addLast(l);
+        }
+        
+        columna.moveBackwards();
+        for(int i = 0; i<sopa.size(); i++){
+            CircularDoublyLinkedList<Letra> fila = sopa.get(i);
+            fila.set(ncolumna-1, columna.get(i));
+        }
+    }
+    
     private void actualizarColumnas(CircularDoublyLinkedList<Letra> fila, int nfila){
         
         Iterator<Letra> it = fila.iterator();

@@ -12,7 +12,7 @@ public class Testing {
     
     public static void main(String[] args){
         
-        Partida.nuevaPartidaUnJugador(Idiomas.SPANISH, 8, 8);
+        Partida.nuevaPartidaUnJugador(Idiomas.SPANISH, 8, 8, 100);
         Sopa sopa = Partida.sopa;
         
         Iterator<CircularDoublyLinkedList> it = sopa.getSopa().iterator();
@@ -20,13 +20,7 @@ public class Testing {
             System.out.println(it.next());
         }
         
-        sopa.avanzarFila(1);
-        sopa.retrocederFila(8);
-        System.out.println("");
-        sopa.insertarFila(5);
-        sopa.insertarColumna(5);
-        sopa.insertarFila(5);
-        sopa.eliminarColumna(2);
+        sopa.avanzarColumna(1);
         
         Iterator<CircularDoublyLinkedList> it2 = sopa.getSopa().iterator();
         while(it2.hasNext()){

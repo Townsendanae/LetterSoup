@@ -73,5 +73,30 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Pane>
+      <Pane id="panes" fx:id="exit" layoutX="585.0" layoutY="565.0" onMouseClicked="#salir" opacity="0.25" prefHeight="75.0" prefWidth="65.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Pane id="panes" fx:id="minusBet" layoutX="45.0" layoutY="585.0" onMouseClicked="#minusBet" opacity="0.25" prefHeight="50.0" prefWidth="40.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
+      <Label layoutX="84.0" layoutY="558.0" text="APUESTA">
+         <font>
+            <Font name="Tahoma Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="betLabel" alignment="CENTER" layoutX="90.0" layoutY="593.0" prefHeight="35.0" prefWidth="65.0" text="100" textAlignment="CENTER">
+         <font>
+            <Font name="Tahoma Bold" size="28.0" />
+         </font>
+      </Label>
+      <Pane id="panes" fx:id="plusBet" layoutX="160.0" layoutY="585.0" onMouseClicked="#plusBet" opacity="0.25" prefHeight="50.0" prefWidth="40.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Pane>
    </children>
 </Pane>

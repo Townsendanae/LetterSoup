@@ -12,23 +12,24 @@ public abstract class Partida {
     public static Idiomas idioma;
     public static Sopa sopa;
     public static ArrayList<Palabra> encontradas = new ArrayList();
+    public static int apuesta;
     
-    public static void nuevaPartidaUnJugador(Idiomas i, int n_filas, int n_columnas){
+    public static void nuevaPartidaUnJugador(Idiomas i, int n_filas, int n_columnas, int bet){
         encontradas.clear();
         idioma = i;
         jugadorUno = new Jugador();
         jugadorDos = null;
         sopa = new Sopa(n_filas, n_columnas);
-        
+        apuesta = bet;
     }
     
-    public static void nuevaPartidaDosJugadores(Idiomas i, int n_filas, int n_columnas){
+    public static void nuevaPartidaDosJugadores(Idiomas i, int n_filas, int n_columnas, int bet){
         encontradas.clear();
         idioma = i;
         jugadorUno = new Jugador();
         jugadorDos = new Jugador();
         sopa = new Sopa(n_filas, n_columnas);
-        
+        apuesta = bet;
     }
     
     public static boolean yaEncontrada(Palabra palabra){

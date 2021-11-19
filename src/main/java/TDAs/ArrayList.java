@@ -137,6 +137,13 @@ public class ArrayList<E> implements List<E>{
         return elements[index];
         
     }
+    
+    @Override
+    public E set(int index, E e){
+        E replaced_element = get(index);
+        elements[index] = e;
+        return replaced_element;
+    }
 
     @Override
     public boolean add(E e, int index) {

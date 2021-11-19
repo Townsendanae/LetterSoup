@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,11 +46,19 @@ public class MainMenuController implements Initializable{
     private Pane multiplayer;
     
     private int jugadores = 1;
+    @FXML
+    private Pane exit;
+    @FXML
+    private Pane minusBet;
+    @FXML
+    private Label betLabel;
+    @FXML
+    private Pane plusBet;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Pane[] arr_panes = {minusRow, plusRow, minusColumn, plusColumn, previousLanguage, 
-            nextLanguage, goButton, singleplayer, multiplayer};
+            nextLanguage, goButton, singleplayer, multiplayer, exit, minusBet, plusBet};
         for(Pane pane: arr_panes){
             pane.setOnMouseEntered(mouseEnteredButton);
             pane.setOnMouseExited(mouseExitedButton);
@@ -153,12 +162,33 @@ public class MainMenuController implements Initializable{
         Idiomas idioma = (Idiomas) language.getUserData();
         int n_filas = Integer.parseInt(rowsLabel.getText());
         int n_columnas = Integer.parseInt(columnsLabel.getText());
+        int apuesta = Integer.parseInt(betLabel.getText());
         
-        if(jugadores == 1) Partida.nuevaPartidaUnJugador(idioma, n_filas, n_columnas);
-        else Partida.nuevaPartidaDosJugadores(idioma, n_filas, n_columnas);
+        if(jugadores == 1) Partida.nuevaPartidaUnJugador(idioma, n_filas, n_columnas, apuesta);
+        else Partida.nuevaPartidaDosJugadores(idioma, n_filas, n_columnas, apuesta);
         
         App.setRoot("Sopa");
         
+    }
+
+    @FXML
+    private void salir(MouseEvent event) {
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @FXML
+    private void minusBet(MouseEvent event) {
+        int apuesta = Integer.parseInt(betLabel.getText());
+        if(apuesta > 100) betLabel.setText(String.valueOf(apuesta-100));
+        if(apuesta == 999) betLabel.setText(String.valueOf(apuesta-99));
+    }
+
+    @FXML
+    private void plusBet(MouseEvent event) {
+        int apuesta = Integer.parseInt(betLabel.getText());
+        if(apuesta < 900) betLabel.setText(String.valueOf(apuesta+100));
+        if(apuesta == 900) betLabel.setText(String.valueOf(apuesta+99));
     }
 
    

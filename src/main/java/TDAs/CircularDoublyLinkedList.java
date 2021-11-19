@@ -168,6 +168,23 @@ public class CircularDoublyLinkedList<E> implements List<E>{
     }
     
     @Override
+    public E set(int index, E e){
+        if(isEmpty()) throw new EmptyListException();
+        if(index > size()-1 || index < -1) throw new IndexOutOfBoundsException("Índice no admitido.");
+        if(index == -1) index = size()-1;
+        
+        CircularDoublyNodeList<E> node = last.getNext();
+        for(int i = 0; i<index; i++){
+            node = node.getNext();
+        }
+        
+        E replaced_element = node.getContent();
+        node.setContent(e);
+        
+        return replaced_element;
+    }
+    
+    @Override
     public void clear(){
         if(isEmpty()) return;
         
