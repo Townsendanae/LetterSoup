@@ -46,6 +46,7 @@ public class MainMenuController implements Initializable{
     private Pane multiplayer;
     
     private int jugadores = 1;
+    private boolean xtreme = false;
     @FXML
     private Pane exit;
     @FXML
@@ -54,11 +55,13 @@ public class MainMenuController implements Initializable{
     private Label betLabel;
     @FXML
     private Pane plusBet;
+    @FXML
+    private Pane timer;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Pane[] arr_panes = {minusRow, plusRow, minusColumn, plusColumn, previousLanguage, 
-            nextLanguage, goButton, singleplayer, multiplayer, exit, minusBet, plusBet};
+            nextLanguage, goButton, singleplayer, multiplayer, exit, minusBet, plusBet, timer};
         for(Pane pane: arr_panes){
             pane.setOnMouseEntered(mouseEnteredButton);
             pane.setOnMouseExited(mouseExitedButton);
@@ -76,7 +79,9 @@ public class MainMenuController implements Initializable{
     
     EventHandler<MouseEvent> mouseExitedButton = (event) -> {
         Pane p = (Pane) event.getTarget();
-        p.setOpacity((p.getOpacity() == 0.25)?0.85:0.25);
+        if(p == timer) p.setOpacity((p.getOpacity() == 0)?0.25:0.85);
+        else p.setOpacity((p.getOpacity() == 0.25)?0.85:0.25);
+        
         event.consume();
     };
 
@@ -164,8 +169,8 @@ public class MainMenuController implements Initializable{
         int n_columnas = Integer.parseInt(columnsLabel.getText());
         int apuesta = Integer.parseInt(betLabel.getText());
         
-        if(jugadores == 1) Partida.nuevaPartidaUnJugador(idioma, n_filas, n_columnas, apuesta);
-        else Partida.nuevaPartidaDosJugadores(idioma, n_filas, n_columnas, apuesta);
+        if(jugadores == 1) Partida.nuevaPartidaUnJugador(idioma, n_filas, n_columnas, apuesta, xtreme);
+        else Partida.nuevaPartidaDosJugadores(idioma, n_filas, n_columnas, apuesta, xtreme);
         
         App.setRoot("Sopa");
         
@@ -189,6 +194,14 @@ public class MainMenuController implements Initializable{
         int apuesta = Integer.parseInt(betLabel.getText());
         if(apuesta < 900) betLabel.setText(String.valueOf(apuesta+100));
         if(apuesta == 900) betLabel.setText(String.valueOf(apuesta+99));
+    }
+
+    @FXML
+    private void clickTimer(MouseEvent event) {
+        Pane p = (Pane) event.getTarget();
+        p.setOpacity((p.getOpacity() == 0.25)?0.0:0.85);
+        xtreme = !xtreme;
+        event.consume();
     }
 
    

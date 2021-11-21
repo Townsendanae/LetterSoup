@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.scene.image.Image;
 
 /**
  * JavaFX App
@@ -20,6 +21,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("MainMenu"));
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.getIcons().add(new Image(App.class.getResourceAsStream("menu_images/icon.png")));
+        stage.setTitle("Proyecto Sopa de Letras - GRUPO 3");
         stage.show();
     }
 

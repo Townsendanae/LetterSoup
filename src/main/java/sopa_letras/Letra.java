@@ -44,5 +44,14 @@ public class Letra implements Comparable<Letra>{
         if(fila != letra.getFila()) return fila-letra.getFila();
         else return columna-letra.getColumna();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + this.letra;
+        hash = 79 * hash + this.columna;
+        hash = 79 * hash + this.fila;
+        return hash;
+    }
     
 }

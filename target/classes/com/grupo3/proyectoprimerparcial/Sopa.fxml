@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,14 +19,15 @@
          <children>
             <Pane prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitToMenu" text="Menú" />
+                  <Button layoutX="27.0" layoutY="13.0" mnemonicParsing="false" onAction="#exitToMenu" text="Menú" />
+                  <Button layoutX="24.0" layoutY="49.0" mnemonicParsing="false" onAction="#shuffle" text="Shuffle" />
                </children>
             </Pane>
             <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="500.0">
                <children>
                   <HBox prefHeight="70.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="70.0" prefWidth="250.0">
+                        <VBox fx:id="playerOnePane" prefHeight="70.0" prefWidth="250.0">
                            <children>
                               <HBox alignment="BOTTOM_LEFT" prefHeight="35.0" prefWidth="250.0">
                                  <children>
@@ -41,7 +43,18 @@
                                           <Pane id="vida" prefHeight="35.0" prefWidth="21.0" />
                                        </children>
                                     </HBox>
+                                    <Label fx:id="timerPlayerOne" prefHeight="25.0" prefWidth="60.0" text="00:00" textFill="#00027c">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Label>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="250.0">
                                  <children>
@@ -66,6 +79,9 @@
                                        </font>
                                     </Label>
                                  </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
                               </HBox>
                            </children>
                         </VBox>
@@ -85,7 +101,18 @@
                                           <Pane id="vida" prefHeight="35.0" prefWidth="21.0" />
                                        </children>
                                     </HBox>
-                                 </children></HBox>
+                                    <Label fx:id="timerPlayerTwo" prefHeight="25.0" prefWidth="60.0" text="00:00" textFill="#7a0000">
+                                       <font>
+                                          <Font name="Tahoma Bold" size="20.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin></HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="250.0">
                                  <children>
                                     <Label text="PALABRAS : ">
@@ -93,7 +120,7 @@
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label prefHeight="19.0" prefWidth="32.0" text="0" textFill="#00027c">
+                                    <Label prefHeight="19.0" prefWidth="32.0" text="0" textFill="#7a0000">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
@@ -103,12 +130,15 @@
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label prefHeight="19.0" prefWidth="32.0" text="0" textFill="#00027c">
+                                    <Label prefHeight="19.0" prefWidth="32.0" text="0" textFill="#7a0000">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
                                     </Label>
-                                 </children></HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin></HBox>
                            </children>
                         </VBox>
                      </children>

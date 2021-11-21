@@ -12,7 +12,7 @@ public class Testing {
     
     public static void main(String[] args){
         
-        Partida.nuevaPartidaUnJugador(Idiomas.SPANISH, 8, 8, 100);
+        Partida.nuevaPartidaUnJugador(Idiomas.SPANISH, 8, 8, 100, false);
         Sopa sopa = Partida.sopa;
         
         Iterator<CircularDoublyLinkedList> it = sopa.getSopa().iterator();

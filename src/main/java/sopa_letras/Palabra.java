@@ -33,9 +33,11 @@ public class Palabra {
     private int getPuntos(){
         int puntos = letras.size();
         Intento intento = esValida(getOrientacion());
-        if(intento == Intento.ACIERTO) return puntos;
-        if(intento == Intento.ERROR) return -puntos;
-        return 0;
+        switch(intento){
+            case ACIERTO: return puntos;
+            case ERROR: return -puntos;
+            default:  return 0;
+        }
     }
     
     private void ordenarLetras(){

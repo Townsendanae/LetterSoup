@@ -4,6 +4,8 @@ import TDAs.CircularDoublyLinkedList;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import partida.Jugador;
 import partida.Partida;
 import sopa_letras.Letra;
@@ -31,6 +34,8 @@ public class SopaController implements Initializable {
     
     private GridPane gridpane;
     private Jugador jugadorActual;
+    private int segundosJugadorUno;
+    private int segundosJugadorDos;
     
     private boolean modoAgregarFila;
     private boolean modoEliminarFila;
@@ -53,6 +58,12 @@ public class SopaController implements Initializable {
     private HBox bottomHBox;
     @FXML
     private HBox buttons;
+    @FXML
+    private VBox playerOnePane;
+    @FXML
+    private Label timerPlayerOne;
+    @FXML
+    private Label timerPlayerTwo;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -60,10 +71,29 @@ public class SopaController implements Initializable {
         generarSopa();
         gridpane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
         if(Partida.jugadorDos == null) playerTwoPane.setVisible(false);
+        else{
+            playerOnePane.setStyle("-fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #65C0FF, white);");
+            playerTwoPane.setOpacity(0.5);
+        }
         jugadorActual = Partida.jugadorUno;
         
         vidasJ1.getChildren().forEach((n) -> n.setVisible(true) );
         vidasJ2.getChildren().forEach((n) -> n.setVisible(true) );
+        
+        timerPlayerOne.setVisible(Partida.xtreme);
+        timerPlayerTwo.setVisible(Partida.xtreme);
+        
+        if(Partida.xtreme){
+            // Iniciando Timers
+            segundosJugadorUno = segundosJugadorDos = 90;
+            
+            timerPlayerOne.setText("01:30");
+            timerPlayerTwo.setText("01:30");
+            
+            Timeline timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> actualizarTimers()));
+            timer.setCycleCount(Timeline.INDEFINITE);
+            timer.play();
+        }
         
     }
 
@@ -297,7 +327,36 @@ public class SopaController implements Initializable {
     };
     
     public void seleccionarLetra(Letra l,int posicionX, int posicionY){
-        //Implementacion del click
+    //Extensión para Modificaciones
+
+        if(modoAgregarFila || modoAgregarColumna || modoEliminarFila || modoEliminarColumna){
+            if(modoAgregarFila){
+                Partida.sopa.insertarFila(l.getFila());
+                modoAgregarFila = false;
+            }else if(modoAgregarColumna){
+                Partida.sopa.insertarColumna(l.getColumna());
+                modoAgregarColumna = false;
+            }else if(modoEliminarFila){
+                Partida.sopa.eliminarFila(l.getFila());
+                modoEliminarFila = false;
+            }else{
+                Partida.sopa.eliminarColumna(l.getColumna());
+                modoEliminarColumna = false;
+            }
+            
+            jugadorActual.modifica();
+            comprobarModificaciones();
+            
+            refrescarSopa();
+        }else{
+            
+            //TODO Implementacion del click
+        
+            if(Partida.jugadorDos != null) cambiarTurno();
+        }
+
+    
+        
     }
     
     private void refrescarSopa(){
@@ -307,6 +366,21 @@ public class SopaController implements Initializable {
     
     private void cambiarTurno(){
         jugadorActual = ((jugadorActual==Partida.jugadorUno)?Partida.jugadorDos:Partida.jugadorUno);
+        
+        if(jugadorActual == Partida.jugadorUno){
+            playerOnePane.setStyle("-fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #65C0FF, white);");
+            playerTwoPane.setStyle("");
+            
+            playerTwoPane.setOpacity(0.5);
+            playerOnePane.setOpacity(1);
+        }else{
+            playerTwoPane.setStyle("-fx-background-color: linear-gradient(from 0% 50% to 100% 50%, white, #FF6D6D);");
+            playerOnePane.setStyle("");
+            
+            playerOnePane.setOpacity(0.5);
+            playerTwoPane.setOpacity(1);
+        }
+        
         comprobarModificaciones();
     }
     
@@ -321,6 +395,32 @@ public class SopaController implements Initializable {
         }else{
             vidasJ2.getChildren().remove(vidasJ2.getChildren().size()-1);
         }
+    }
+    
+    private void actualizarTimers(){
+        if(jugadorActual == Partida.jugadorUno){
+            if(segundosJugadorUno > 60){
+                segundosJugadorUno--;
+                timerPlayerOne.setText(String.format("0%d:%02d", segundosJugadorUno/60, segundosJugadorUno-60));
+            }else{
+                segundosJugadorUno--;
+                timerPlayerOne.setText(String.format("00:%d", segundosJugadorUno));
+            }
+        }else{
+            if(segundosJugadorDos > 60){
+                segundosJugadorDos--;
+                timerPlayerTwo.setText(String.format("0%d:%02d", segundosJugadorDos/60, segundosJugadorDos-60));
+            }else{
+                segundosJugadorDos--;
+                timerPlayerTwo.setText(String.format("00:%d", segundosJugadorDos));
+            }
+        }
+        
+        if(segundosJugadorUno == 0 || segundosJugadorDos == 0) terminarJuego();
+    }
+    
+    private void terminarJuego(){
+        //TODO
     }
     
     @FXML
@@ -350,5 +450,12 @@ public class SopaController implements Initializable {
     private void eliminarColumna(ActionEvent event) {
         modoEliminarColumna = !modoEliminarColumna;
         modoEliminarFila = modoAgregarFila = modoAgregarColumna = false;
+    }
+
+    @FXML
+    private void shuffle(ActionEvent event) {
+        Partida.sopa.reorganizarLetras();
+        refrescarSopa();
+        event.consume();
     }
 }

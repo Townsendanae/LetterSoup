@@ -3,9 +3,11 @@ package sopa_letras;
 
 import TDAs.CircularDoublyLinkedList;
 import java.util.ArrayDeque;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Set;
 import partida.Partida;
 
 public class Sopa {
@@ -177,5 +179,37 @@ public class Sopa {
         return n_columnas;
     }
     
-    
+    public void reorganizarLetras(){
+        // Aprovechando la característica de Hashing del HashSet para reorganizar las Letras de la Sopa
+        // Note que la clase Letra sobrescribe al método "hashCode()"
+        
+        Set<CircularDoublyLinkedList<Letra>> filas = new HashSet();
+        for(CircularDoublyLinkedList<Letra> fila: sopa){
+            
+            Set<Letra> letras = new HashSet();
+            CircularDoublyLinkedList<Letra> nueva_fila = new CircularDoublyLinkedList();
+            
+            for(Letra letra: fila){
+                letras.add(letra);
+            }
+            
+            Iterator<Letra> it = letras.iterator();
+            
+            while(it.hasNext()){
+                nueva_fila.addLast(it.next());
+            }
+            
+            filas.add(nueva_fila);
+        }
+        
+        int n = 0;
+        Iterator<CircularDoublyLinkedList<Letra>> it = filas.iterator();
+        
+        while(it.hasNext()){
+            CircularDoublyLinkedList<Letra> fila_reorganizada = it.next();
+            sopa.set(n++, fila_reorganizada);
+            actualizarColumnas(fila_reorganizada, n);
+        }
+        
+    }
 }
