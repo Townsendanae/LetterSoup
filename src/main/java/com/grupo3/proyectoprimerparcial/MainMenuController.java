@@ -47,6 +47,7 @@ public class MainMenuController implements Initializable{
     
     private int jugadores = 1;
     private boolean xtreme = false;
+    
     @FXML
     private Pane exit;
     @FXML
@@ -185,7 +186,7 @@ public class MainMenuController implements Initializable{
     @FXML
     private void minusBet(MouseEvent event) {
         int apuesta = Integer.parseInt(betLabel.getText());
-        if(apuesta > 100) betLabel.setText(String.valueOf(apuesta-100));
+        if(apuesta > 0) betLabel.setText(String.valueOf(apuesta-100));
         if(apuesta == 999) betLabel.setText(String.valueOf(apuesta-99));
     }
 

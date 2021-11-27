@@ -13,19 +13,7 @@ public class Testing {
     public static void main(String[] args){
         
         Partida.nuevaPartidaUnJugador(Idiomas.SPANISH, 8, 8, 100, false);
-        Sopa sopa = Partida.sopa;
-        
-        Iterator<CircularDoublyLinkedList> it = sopa.getSopa().iterator();
-        while(it.hasNext()){
-            System.out.println(it.next());
-        }
-        
-        sopa.avanzarColumna(1);
-        
-        Iterator<CircularDoublyLinkedList> it2 = sopa.getSopa().iterator();
-        while(it2.hasNext()){
-            System.out.println(it2.next());
-        }
+        Partida.actualizarPalabrasValidas();
         
         Jugador jugador = Partida.jugadorUno;
         Letra l1 = new Letra('A', 6, 1);
@@ -45,6 +33,7 @@ public class Testing {
         System.out.println(jugador.getPuntos()+" "+
                 jugador.getNumeroPalabrasEncontradas()+" "+
                 jugador.getVidas());
+        
         
     }
     

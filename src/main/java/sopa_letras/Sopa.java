@@ -2,6 +2,7 @@
 package sopa_letras;
 
 import TDAs.CircularDoublyLinkedList;
+import TDAs.DoublyLinkedList;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,13 +15,13 @@ public class Sopa {
     
     int n_filas;
     int n_columnas;
-    private final CircularDoublyLinkedList<CircularDoublyLinkedList> sopa;
+    private final DoublyLinkedList<CircularDoublyLinkedList> sopa;
     private final String CHARS = Partida.idioma.chars;
     
     public Sopa(int n_filas, int n_columnas){
         this.n_filas = n_filas;
         this.n_columnas = n_columnas;
-        sopa = new CircularDoublyLinkedList();
+        sopa = new DoublyLinkedList();
         
         Random rnd = new Random();
         
@@ -38,7 +39,7 @@ public class Sopa {
         
     }
     
-    public CircularDoublyLinkedList<CircularDoublyLinkedList> getSopa(){
+    public DoublyLinkedList<CircularDoublyLinkedList> getSopa(){
         return sopa;
     }
     
@@ -116,6 +117,7 @@ public class Sopa {
             }
         }
         n_filas--;
+        Partida.actualizarPalabrasValidas();
     }
     
     public void eliminarColumna(int n_columna){
@@ -126,6 +128,7 @@ public class Sopa {
             actualizarColumnas(fila, i+1);
         }
         n_columnas--;
+        Partida.actualizarPalabrasValidas();
     }
     
     public void insertarFila(int index){
@@ -147,6 +150,7 @@ public class Sopa {
             }
         }
         n_filas++;
+        Partida.actualizarPalabrasValidas();
     }
     
     public void insertarColumna(int index){
@@ -169,6 +173,7 @@ public class Sopa {
             actualizarColumnas(fila, i+1);
         }
         n_columnas++;
+        Partida.actualizarPalabrasValidas();
     }
 
     public int getN_filas() {

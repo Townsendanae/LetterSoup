@@ -21,5 +21,6 @@ public interface List<E> extends Iterable<E> {
     void clear();
     
     int indexOf(E Element);
+    boolean contains(E Element);
     
 }

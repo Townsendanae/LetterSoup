@@ -6,11 +6,13 @@ public class Letra implements Comparable<Letra>{
     private char letra;
     private int columna;
     private int fila;
+    private int usos;
 
     public Letra(char letra, int fila, int columna) {
         this.letra = letra;
         this.columna = columna;
         this.fila = fila;
+        this.usos = 0;
     }
 
     public char getLetra() {
@@ -32,6 +34,14 @@ public class Letra implements Comparable<Letra>{
     public void actualizarPosicion(int fila, int columna){
         this.fila = fila;
         this.columna = columna;
+    }
+    
+    public int getUsos(){
+        return usos;
+    }
+    
+    public void usar(){
+        usos++;
     }
     
     @Override

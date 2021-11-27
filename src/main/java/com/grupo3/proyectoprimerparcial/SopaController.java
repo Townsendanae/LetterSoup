@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -179,10 +180,16 @@ public class SopaController implements Initializable {
                 
                 contenedor.setStyle("-fx-font-family: 'Tahoma'; -fx-font-size: "+tamaño_letra+"px;");
                 
+                Pane fondo = new Pane();
+                fondo.setStyle("-fx-background-color: #3999FF;");
+                fondo.setMouseTransparent(true);
+                fondo.setOpacity(0.25*l.getUsos());
+                
+                pane.getChildren().add(fondo);
                 pane.getChildren().add(contenedor);
                 StackPane.setAlignment(contenedor ,Pos.CENTER);
                 
-                pane.setOnMouseClicked(t->seleccionarLetra(l,coordX,coordY));
+                pane.setOnMouseClicked(t->seleccionarLetra(fondo,l,coordX,coordY));
                 
                 pane.setOnMouseEntered(mouseEnteredLetter);
                 pane.setOnMouseExited(mouseExitedLetter);
@@ -326,7 +333,7 @@ public class SopaController implements Initializable {
         event.consume();
     };
     
-    public void seleccionarLetra(Letra l,int posicionX, int posicionY){
+    public void seleccionarLetra(Pane fondo, Letra l,int posicionX, int posicionY){
     //Extensión para Modificaciones
 
         if(modoAgregarFila || modoAgregarColumna || modoEliminarFila || modoEliminarColumna){
@@ -350,8 +357,13 @@ public class SopaController implements Initializable {
             refrescarSopa();
         }else{
             
-            //TODO Implementacion del click
+            //TODO Implementacion del click (Donaí)
         
+            
+            // Oscureciendo la casilla
+            fondo.setOpacity(fondo.getOpacity()+0.25);
+            
+            // Cambiando turno (Partida de 2 Jugadores)
             if(Partida.jugadorDos != null) cambiarTurno();
         }
 

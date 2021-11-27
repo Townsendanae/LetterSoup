@@ -3,14 +3,12 @@ package sopa_letras;
 
 import java.util.Stack;
 import TDAs.ArrayList;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.Objects;
 import partida.Jugador;
 import partida.Partida;
 
 public class Palabra {
-    private final String PALABRAS = Partida.idioma.ruta;
+    
     private final ArrayList<Letra> letras;
     private final Jugador jugador;
     
@@ -120,32 +118,15 @@ public class Palabra {
         
     
     private Intento comprobarPalabra(String palabra){
-        palabra = palabra.toLowerCase();
-        try(BufferedReader bf = new BufferedReader(new FileReader(PALABRAS))){
-             
-            String linea;
-            while((linea = bf.readLine()) != null){
-                
-                linea = linea.strip();
-                linea = linea.replace("á","a");
-                linea = linea.replace("é","e");
-                linea = linea.replace("í","i");
-                linea = linea.replace("ó","o");
-                linea = linea.replace("ú","u");
-                
-                if(linea.length() > 1 && linea.equals(palabra)){
-                    if(Partida.yaEncontrada(this)) return Intento.YA_ENCONTRADA;
-                    
-                    jugador.agregarPalabra(this);
-                    Partida.agregarPalabra(this);
-                    return Intento.ACIERTO;
-                }
-            }
+        if(Partida.yaEncontrada(this)) return Intento.YA_ENCONTRADA;
+        else if(Partida.validas.contains(palabra)){
             
-        }catch(Exception e){
-            
+            jugador.agregarPalabra(this);
+            Partida.agregarPalabra(this, palabra);
+            Partida.actualizarPalabrasValidas();
+            return Intento.ACIERTO;
         }
-        
+         
         return Intento.ERROR;
     }
     

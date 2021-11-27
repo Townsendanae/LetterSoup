@@ -20,7 +20,8 @@ public class ArrayList<E> implements List<E>{
     }
     
     private void addCapacity(){
-        E[] new_array = (E[]) (new Object[capacity + capacity/2]);
+        capacity += capacity/2;
+        E[] new_array = (E[]) (new Object[capacity]);
         System.arraycopy(elements, 0, new_array, 0, effectiveSize);
         
         elements = new_array;
@@ -166,7 +167,7 @@ public class ArrayList<E> implements List<E>{
     @Override
     public void clear() {
         if(isEmpty()) return;
-        elements = (E[]) new Object[capacity/2];
+        elements = (E[]) new Object[effectiveSize];
         effectiveSize = 0;
     }
 
@@ -183,6 +184,7 @@ public class ArrayList<E> implements List<E>{
         return -2;
     }
     
+    @Override
     public boolean contains(E e){
         for(int i = 0; i<effectiveSize; i++){
             if(elements[i].equals(e)) return true;
