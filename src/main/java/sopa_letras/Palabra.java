@@ -118,8 +118,9 @@ public class Palabra {
         
     
     private Intento comprobarPalabra(String palabra){
-        if(Partida.yaEncontrada(this)) return Intento.YA_ENCONTRADA;
-        else if(Partida.validas.contains(palabra)){
+        if(Partida.yaEncontrada(this) && Partida.encontradas_string.contains(palabra)) 
+            return Intento.YA_ENCONTRADA;
+        else if(Partida.validas.contains(palabra) || Partida.encontradas_string.contains(palabra)){
             
             jugador.agregarPalabra(this);
             Partida.agregarPalabra(this, palabra);
@@ -142,7 +143,7 @@ public class Palabra {
             Palabra p = (Palabra) o;
             if(p.getLetras().size() != letras.size()) return false;
             for(int i = 0; i < p.getLetras().size(); i++){
-                if(p.getLetras().get(i) != letras.get(i)) return false;
+                if(!p.getLetras().contains(letras.get(i))) return false;
             }
             return true;
         }

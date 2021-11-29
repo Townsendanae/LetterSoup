@@ -236,7 +236,6 @@ public class DoublyLinkedList<E> implements List<E>{
     public boolean contains(E e){
         if(isEmpty()) return false;
         DoublyNodeList<E> node = first;
-        if(size() == 1) return e.equals(first.getContent());
         while(node!=null){
             if(e.equals(node.getContent())) return true;
             node = node.getNext();
