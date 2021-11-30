@@ -17,10 +17,10 @@ public class Testing {
         Partida.actualizarPalabrasValidas();
         
         Jugador jugador = Partida.jugadorUno;
-        Letra l1 = new Letra('A', 6, 1);
-        Letra l2 = new Letra('L', 5, 2);
-        Letra l3 = new Letra('O', 4, 3);
-        Letra l4 = new Letra('B', 3, 4);
+        Letra l1 = new Letra('B', 1, 1);
+        Letra l2 = new Letra('O', 2, 1);
+        Letra l3 = new Letra('L', 3, 1);
+        Letra l4 = new Letra('A', 5, 1);
         ArrayList<Letra> letras = new ArrayList();
         letras.addLast(l1);
         letras.addLast(l2);

@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -50,6 +51,7 @@ public class SopaController implements Initializable {
     private boolean modoAgregarColumna;
     private boolean modoEliminarColumna;
     ArrayList<Letra> letras = new ArrayList<>();
+    ArrayList<Pane> fondos = new ArrayList<>();
 
     @FXML
     private VBox leftVBox;
@@ -374,6 +376,8 @@ public class SopaController implements Initializable {
             //TODO Implementacion del click (Donaí)
             if (letras.isEmpty()) { // No se ha seleccionado ninguna palabra, es la primera letra
                 letras.addLast(l);
+                fondo.setOpacity(fondo.getOpacity() + 0.20);
+                fondos.addLast(fondo);
                 System.out.println(letras);
             } else { // comprobar si esta en los costados. 
                 int size = letras.size();
@@ -381,24 +385,20 @@ public class SopaController implements Initializable {
                 int actualX = l.getColumna();
                 int actualY = l.getFila();
 
-                //comprobar si estan juntas.
+                //comprobar si estan juntas.^w^
                 if ((actualX + 1 == previous.getColumna() || previous.getColumna() == actualX - 1 || previous.getColumna() == actualX)
                         && (previous.getFila() == actualY + 1 || previous.getFila() == actualY - 1 || previous.getFila() == actualY)
                         && (actualX != previous.getColumna() || actualY != previous.getFila())) {
                     letras.addLast(l);
+                    // Oscureciendo la casilla
+                    fondo.setOpacity(fondo.getOpacity() + 0.20);
+                    fondos.addLast(fondo);
                     System.out.println(letras);
                 } else {
                     System.out.println("La letra " + l + "Debe estar junto a su palabra");
                 }
             }
 
-            // Oscureciendo la casilla
-            fondo.setOpacity(fondo.getOpacity() + 0.25);
-
-            // Cambiando turno (Partida de 2 Jugadores)
-            if (Partida.jugadorDos != null) {
-                cambiarTurno();
-            }
         }
 
     }
@@ -486,7 +486,7 @@ public class SopaController implements Initializable {
             HBoxVidas.getChildren().remove(0);
         } else {
             String cantidadPalabras = "" + jugador.getNumeroPalabrasEncontradas();
-            lblpalabras.setText(cantidadPalabras);
+            Platform.runLater(() -> lblpalabras.setText(cantidadPalabras));
         }
     }
 
@@ -572,10 +572,9 @@ public class SopaController implements Initializable {
 
     @FXML
     private void enviarPalabra() {
-        // falta validar que el arreglo no sea null.
+        if(letras.isEmpty()) return;
         Palabra p = new Palabra(letras, jugadorActual);
         System.out.println(p);
-        System.out.println("Ya fue encontrada? " + Partida.yaEncontrada(p));
         Intento intento = p.comprobar(); // comprobar inserta la palabra en las encontradas
 
         switch (intento) {
@@ -584,6 +583,9 @@ public class SopaController implements Initializable {
                 AbrirVentana(Intento.ERROR);
                 jugadorActual.quitarVida();
                 casoPorTurno(getTurno(), true);
+                for(Pane fondo: fondos){
+                    fondo.setOpacity(0);
+                }
                 break;
             case YA_ENCONTRADA:
                 System.out.println("Oiga, ya encontró esa, busque otra");

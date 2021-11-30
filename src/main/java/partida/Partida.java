@@ -45,6 +45,10 @@ public abstract class Partida {
         apuesta = bet;
         xtreme = xtreme_mode;
         validas = new ArrayList((idioma == Idiomas.SPANISH)?50000:2000);
+        actualizarPalabrasValidas();
+        System.out.println(validas.get(0));
+        System.out.println(validas.get(1));
+        System.out.println(validas.contains("LIO"));
     }
     
     public static void nuevaPartidaDosJugadores(int n_filas, int n_columnas, int bet, boolean xtreme_mode){
@@ -75,9 +79,9 @@ public abstract class Partida {
             for(Letra letra : fila){
                 Character c = letra.getLetra();
                 if(!usos.containsKey(c)){
-                    usos.put(c, 4-letra.getUsos());
+                    usos.put(c, 5-letra.getUsos());
                 }else{
-                    usos.put(c, usos.get(c)+(4-letra.getUsos()));
+                    usos.put(c, usos.get(c)+(5-letra.getUsos()));
                 }
             }
         }
