@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -64,26 +63,22 @@ public class MainMenuController implements Initializable{
         Pane[] arr_panes = {minusRow, plusRow, minusColumn, plusColumn, previousLanguage, 
             nextLanguage, goButton, singleplayer, multiplayer, exit, minusBet, plusBet, timer};
         for(Pane pane: arr_panes){
-            pane.setOnMouseEntered(mouseEnteredButton);
-            pane.setOnMouseExited(mouseExitedButton);
-            pane.setOnMousePressed(mouseExitedButton);
-            pane.setOnMouseReleased(mouseEnteredButton);
+            pane.setOnMouseEntered(e -> mouseEnteredButton(pane));
+            pane.setOnMouseExited(e -> mouseExitedButton(pane));
+            pane.setOnMousePressed(e -> mouseExitedButton(pane));
+            pane.setOnMouseReleased(me -> mouseEnteredButton(pane));
         }
         cambiarIdioma();
+        timer.setOnMouseClicked(e -> clickTimer(timer));
     }
 
-    EventHandler<MouseEvent> mouseEnteredButton = (event) -> {
-        Pane p = (Pane) event.getTarget();
+    private void mouseEnteredButton(Pane p){
         p.setOpacity((p.getOpacity() == 0.25)?0:0.25);
-        event.consume();
     };
     
-    EventHandler<MouseEvent> mouseExitedButton = (event) -> {
-        Pane p = (Pane) event.getTarget();
+    private void mouseExitedButton(Pane p){
         if(p == timer) p.setOpacity((p.getOpacity() == 0)?0.25:0.85);
         else p.setOpacity((p.getOpacity() == 0.25)?0.85:0.25);
-        
-        event.consume();
     };
 
     @FXML
@@ -122,13 +117,13 @@ public class MainMenuController implements Initializable{
     
     private void cambiarIdioma(){
         language.getChildren().clear();
-        if(language.getUserData() == Idiomas.SPANISH){
+        if(Partida.idioma == Idiomas.SPANISH){
             ImageView imgview;
             try{
                 InputStream input = new FileInputStream(new File("resources/images/english.png"));
                 Image img = new Image(input);
                 imgview = new ImageView(img);
-                language.setUserData(Idiomas.ENGLISH);
+                Partida.idioma = Idiomas.ENGLISH;
                 language.getChildren().add(imgview);
             }catch(Exception e){
                 
@@ -140,7 +135,7 @@ public class MainMenuController implements Initializable{
                 InputStream input = new FileInputStream(new File("resources/images/spanish.png"));
                 Image img = new Image(input);
                 imgview = new ImageView(img);
-                language.setUserData(Idiomas.SPANISH);
+                Partida.idioma = Idiomas.SPANISH;
                 language.getChildren().add(imgview);
             }catch(Exception e){
                 
@@ -165,13 +160,12 @@ public class MainMenuController implements Initializable{
     @FXML
     private void empezarPartida(MouseEvent event) throws IOException {
         
-        Idiomas idioma = (Idiomas) language.getUserData();
         int n_filas = Integer.parseInt(rowsLabel.getText());
         int n_columnas = Integer.parseInt(columnsLabel.getText());
         int apuesta = Integer.parseInt(betLabel.getText());
         
-        if(jugadores == 1) Partida.nuevaPartidaUnJugador(idioma, n_filas, n_columnas, apuesta, xtreme);
-        else Partida.nuevaPartidaDosJugadores(idioma, n_filas, n_columnas, apuesta, xtreme);
+        if(jugadores == 1) Partida.nuevaPartidaUnJugador( n_filas, n_columnas, apuesta, xtreme);
+        else Partida.nuevaPartidaDosJugadores(n_filas, n_columnas, apuesta, xtreme);
         
         App.setRoot("Sopa");
         
@@ -197,12 +191,9 @@ public class MainMenuController implements Initializable{
         if(apuesta == 900) betLabel.setText(String.valueOf(apuesta+99));
     }
 
-    @FXML
-    private void clickTimer(MouseEvent event) {
-        Pane p = (Pane) event.getTarget();
+    private void clickTimer(Pane p){
         p.setOpacity((p.getOpacity() == 0.25)?0.0:0.85);
         xtreme = !xtreme;
-        event.consume();
     }
 
    

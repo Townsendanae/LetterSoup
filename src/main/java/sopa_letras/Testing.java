@@ -12,7 +12,8 @@ public class Testing {
     
     public static void main(String[] args){
         
-        Partida.nuevaPartidaUnJugador(Idiomas.SPANISH, 8, 8, 100, false);
+        Partida.nuevaPartidaUnJugador(8, 8, 100, false);
+        Partida.idioma = Idiomas.SPANISH;
         Partida.actualizarPalabrasValidas();
         
         Jugador jugador = Partida.jugadorUno;

@@ -1,6 +1,7 @@
 
 package TDAs;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class DoublyLinkedList<E> implements List<E>{
@@ -238,6 +239,16 @@ public class DoublyLinkedList<E> implements List<E>{
         DoublyNodeList<E> node = first;
         while(node!=null){
             if(e.equals(node.getContent())) return true;
+            node = node.getNext();
+        }
+        return false;
+    }
+    
+    public boolean contains(E e, Comparator<E> cmp){
+        if(isEmpty()) return false;
+        DoublyNodeList<E> node = first;
+        while(node!=null){
+            if(cmp.compare(e,node.getContent()) == 0) return true;
             node = node.getNext();
         }
         return false;

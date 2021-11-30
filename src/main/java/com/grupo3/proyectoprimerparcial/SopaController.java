@@ -4,6 +4,7 @@ import TDAs.CircularDoublyLinkedList;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -139,9 +140,11 @@ public class SopaController implements Initializable {
             
             leftVBox.getChildren().add(pane_2);
             
-            pane_2.setOnMouseEntered(mouseEnteredArrow);
-            pane_2.setOnMouseExited(mouseExitedArrow);
-            pane_2.setOnMouseClicked(moveRowBackwards);
+            int n_fila = y+1;
+            
+            pane_2.setOnMouseEntered(e -> mouseEnteredArrow(pane_2));
+            pane_2.setOnMouseExited(e -> mouseExitedArrow(pane_2));
+            pane_2.setOnMouseClicked(e -> moveRowBackwards(n_fila));
             
             StackPane pane_3 = new StackPane();
             pane_3.setPrefHeight(height);
@@ -158,9 +161,9 @@ public class SopaController implements Initializable {
             
             rightVBox.getChildren().add(pane_3);
             
-            pane_3.setOnMouseEntered(mouseEnteredArrow);
-            pane_3.setOnMouseExited(mouseExitedArrow);
-            pane_3.setOnMouseClicked(moveRowForward);
+            pane_3.setOnMouseEntered(e -> mouseEnteredArrow(pane_3));
+            pane_3.setOnMouseExited(e -> mouseExitedArrow(pane_3));
+            pane_3.setOnMouseClicked(e -> moveRowForward(n_fila));
             
             for(int x=0;x<fila.size();x++){
                 int coordX=x;
@@ -220,9 +223,11 @@ public class SopaController implements Initializable {
             
             bottomHBox.getChildren().add(pane_4);
             
-            pane_4.setOnMouseEntered(mouseEnteredArrow);
-            pane_4.setOnMouseExited(mouseExitedArrow);
-            pane_4.setOnMouseClicked(moveColumnForward);
+            int n_columna = i+1;
+            
+            pane_4.setOnMouseEntered(e -> mouseEnteredArrow(pane_4));
+            pane_4.setOnMouseExited(e -> mouseExitedArrow(pane_4));
+            pane_4.setOnMouseClicked(e -> moveColumnForward(n_columna));
             
             StackPane pane_5 = new StackPane();
             pane_5.setPrefSize(width, 30);
@@ -238,10 +243,10 @@ public class SopaController implements Initializable {
             StackPane.setAlignment(flecha_arr ,Pos.CENTER);
             
             topHBox.getChildren().add(pane_5);
-            
-            pane_5.setOnMouseEntered(mouseEnteredArrow);
-            pane_5.setOnMouseExited(mouseExitedArrow);
-            pane_5.setOnMouseClicked(moveColumnBackwards);
+           
+            pane_5.setOnMouseEntered(e -> mouseEnteredArrow(pane_5));
+            pane_5.setOnMouseExited(e -> mouseExitedArrow(pane_5));
+            pane_5.setOnMouseClicked(e -> moveColumnBackwards(n_columna));
         }
         
         panelCentral.getChildren().add(gridpane);
@@ -293,45 +298,39 @@ public class SopaController implements Initializable {
         event.consume();
     };
     
-    EventHandler<MouseEvent> mouseEnteredArrow = (event) -> {
-        StackPane p = (StackPane) event.getTarget();
-        p.setOpacity(1);
-        event.consume();
-    };
+    private void mouseEnteredArrow(StackPane p){
+        FadeTransition f = new FadeTransition(Duration.millis(250), p);
+        f.setFromValue(p.getOpacity());
+        f.setToValue(1);
+        f.play();
+    }
     
-    EventHandler<MouseEvent> mouseExitedArrow = (event) -> {
-        StackPane p = (StackPane) event.getTarget();
-        p.setOpacity(0);
-        event.consume();
-    };
+    private void mouseExitedArrow(StackPane p){
+        FadeTransition f = new FadeTransition(Duration.millis(250), p);
+        f.setFromValue(p.getOpacity());
+        f.setToValue(0);
+        f.play();
+    }
     
-    EventHandler<MouseEvent> moveRowForward = (event) -> {
-        StackPane p = (StackPane) event.getTarget();
-        Partida.sopa.avanzarFila((Integer) p.getUserData());
+    private void moveRowForward(int n_fila){
+        Partida.sopa.avanzarFila(n_fila);
         refrescarSopa();
-        event.consume();
-    };
+    }
     
-    EventHandler<MouseEvent> moveRowBackwards = (event) -> {
-        StackPane p = (StackPane) event.getTarget();
-        Partida.sopa.retrocederFila((Integer) p.getUserData());
+    private void moveRowBackwards(int n_fila){
+        Partida.sopa.retrocederFila(n_fila);
         refrescarSopa();
-        event.consume();
-    };
+    }
     
-    EventHandler<MouseEvent> moveColumnForward = (event) -> {
-        StackPane p = (StackPane) event.getTarget();
-        Partida.sopa.avanzarColumna((Integer) p.getUserData());
+    private void moveColumnForward(int n_columna){
+        Partida.sopa.avanzarColumna(n_columna);
         refrescarSopa();
-        event.consume();
-    };
+    }
     
-    EventHandler<MouseEvent> moveColumnBackwards = (event) -> {
-        StackPane p = (StackPane) event.getTarget();
-        Partida.sopa.retrocederColumna((Integer) p.getUserData());
+    private void moveColumnBackwards(int n_columna){
+        Partida.sopa.retrocederColumna(n_columna);
         refrescarSopa();
-        event.consume();
-    };
+    }
     
     public void seleccionarLetra(Pane fondo, Letra l,int posicionX, int posicionY){
     //Extensión para Modificaciones

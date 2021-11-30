@@ -136,21 +136,6 @@ public class Palabra {
     }
 
     @Override
-    public boolean equals(Object o){
-        if(o == null) return false;
-        if(o == this) return true;
-        if(o.getClass() == this.getClass()){
-            Palabra p = (Palabra) o;
-            if(p.getLetras().size() != letras.size()) return false;
-            for(int i = 0; i < p.getLetras().size(); i++){
-                if(!p.getLetras().contains(letras.get(i))) return false;
-            }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public int hashCode() {
         int hash = 3;
         hash = 97 * hash + Objects.hashCode(this.letras);
