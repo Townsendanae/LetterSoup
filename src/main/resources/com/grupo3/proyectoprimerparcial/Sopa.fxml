@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" stylesheets="@sopa.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo3.proyectoprimerparcial.SopaController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" stylesheets="@sopa.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.grupo3.proyectoprimerparcial.SopaController">
    <center>
       <AnchorPane id="panelCentral" fx:id="panelCentral" prefHeight="500.0" prefWidth="500.0" BorderPane.alignment="CENTER" />
    </center>
@@ -63,7 +63,7 @@
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblPalbrasJ1" prefHeight="19.0" prefWidth="32.0" text="0" textFill="#00027c">
+                                    <Label fx:id="lblPalabrasJ1" prefHeight="19.0" prefWidth="32.0" text="0" textFill="#00027c">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>

@@ -125,7 +125,7 @@ public class DoublyLinkedList<E> implements List<E>{
         DoublyNodeList<E> new_node = new DoublyNodeList();
         new_node.setContent(element);
         
-        DoublyNodeList<E> node = last.getNext();
+        DoublyNodeList<E> node = first;
         for(int i = 0; i<index; i++){
             node = node.getNext();
         }

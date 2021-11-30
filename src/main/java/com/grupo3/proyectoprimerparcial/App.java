@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import javafx.scene.image.Image;
+import partida.Sonidos;
 
 /**
  * JavaFX App
@@ -24,6 +25,7 @@ public class App extends Application {
         stage.getIcons().add(new Image(App.class.getResourceAsStream("menu_images/icon.png")));
         stage.setTitle("Proyecto Sopa de Letras - GRUPO 3");
         stage.show();
+        Sonidos.playBGMusic();
     }
 
     static void setRoot(String fxml) throws IOException {

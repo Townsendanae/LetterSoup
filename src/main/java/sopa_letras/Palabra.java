@@ -58,9 +58,14 @@ public class Palabra {
             return Intento.YA_ENCONTRADA;
         } else if (Partida.validas.contains(palabra) || Partida.encontradas_string.contains(palabra)) {
 
-            jugador.agregarPalabra(this);
+            jugador.agregarPalabra(palabra);
             Partida.agregarPalabra(this, palabra);
             Partida.actualizarPalabrasValidas();
+            
+            for(Letra letra: letras){
+                letra.usar();
+            }
+            
             return Intento.ACIERTO;
         }
 

@@ -2,13 +2,12 @@
 package partida;
 
 import TDAs.ArrayList;
-import sopa_letras.Palabra;
 
 public class Jugador {
     
     private int puntos;
     private int vidas;
-    private final ArrayList<Palabra> palabras_encontradas;
+    private final ArrayList<String> palabras_encontradas;
     private int modificaciones;
     
     public Jugador() {
@@ -30,8 +29,9 @@ public class Jugador {
         return palabras_encontradas.size();
     }
 
-    public void agregarPalabra(Palabra palabra) {
-        palabras_encontradas.addLast(palabra);
+    public void agregarPalabra(String palabra) {
+        if (!palabras_encontradas.contains(palabra)) 
+            palabras_encontradas.addLast(palabra);
     }
     
     public void quitarVida(){
@@ -40,6 +40,10 @@ public class Jugador {
     
     public int getVidas(){
         return vidas;
+    }
+    
+    public ArrayList<String> getPalabras(){
+        return palabras_encontradas;
     }
     
     public int getModificaciones(){

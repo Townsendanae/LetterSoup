@@ -11,7 +11,7 @@ import partida.Partida;
 public class Testing {
     
     public static void main(String[] args){
-        
+        /*
         Partida.nuevaPartidaUnJugador(8, 8, 100, false);
         Partida.idioma = Idiomas.SPANISH;
         Partida.actualizarPalabrasValidas();
@@ -21,6 +21,7 @@ public class Testing {
         Letra l2 = new Letra('O', 2, 1);
         Letra l3 = new Letra('L', 3, 1);
         Letra l4 = new Letra('A', 5, 1);
+        
         ArrayList<Letra> letras = new ArrayList();
         letras.addLast(l1);
         letras.addLast(l2);
@@ -34,7 +35,7 @@ public class Testing {
         System.out.println(jugador.getPuntos()+" "+
                 jugador.getNumeroPalabrasEncontradas()+" "+
                 jugador.getVidas());
-        
+        */
         
     }
     

@@ -167,7 +167,8 @@ public class ArrayList<E> implements List<E>{
     @Override
     public void clear() {
         if(isEmpty()) return;
-        elements = (E[]) new Object[effectiveSize];
+        capacity = effectiveSize;
+        elements = (E[]) new Object[capacity];
         effectiveSize = 0;
     }
 

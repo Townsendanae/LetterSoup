@@ -8,9 +8,7 @@ import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -20,7 +18,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -107,10 +104,15 @@ public class SopaController implements Initializable {
 
         if (Partida.xtreme) {
             // Iniciando Timers
-            segundosJugadorUno = segundosJugadorDos = 90;
+            segundosJugadorUno = 90;
+            if (Partida.jugadorDos != null) {
+                segundosJugadorDos = 90;
+            }
 
             timerPlayerOne.setText("01:30");
-            timerPlayerTwo.setText("01:30");
+            if (Partida.jugadorDos != null) {
+                timerPlayerTwo.setText("01:30");
+            }
 
             Timeline timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> actualizarTimers()));
             timer.setCycleCount(Timeline.INDEFINITE);
@@ -143,177 +145,168 @@ public class SopaController implements Initializable {
 
             CircularDoublyLinkedList<Letra> fila = sopaDeLetras.getSopa().get(y); //Obtengo mi lista que hace de fila
 
-            //creación flechas para mover filas
-            StackPane pane_2 = new StackPane();
-            pane_2.setPrefHeight(height);
-            pane_2.setCursor(Cursor.HAND);
-            pane_2.setOpacity(0);
-            pane_2.setUserData(y + 1);
-
-            Label flecha_izq = new Label("⮜");
-            flecha_izq.setStyle("-fx-font-size: " + tamaño_letra + "px;");
-            flecha_izq.setMouseTransparent(true);
-
-            pane_2.getChildren().add(flecha_izq);
-            StackPane.setAlignment(flecha_izq, Pos.CENTER_RIGHT);
-
-            leftVBox.getChildren().add(pane_2);
-
             int n_fila = y + 1;
 
-            pane_2.setOnMouseEntered(e -> mouseEnteredArrow(pane_2));
-            pane_2.setOnMouseExited(e -> mouseExitedArrow(pane_2));
-            pane_2.setOnMouseClicked(e -> moveRowBackwards(n_fila));
+            //creación flechas para mover filas
+            StackPane leftArrow = crearFlechaFila(height, tamaño_letra, n_fila, "⮜", true);
+            leftVBox.getChildren().add(leftArrow);
 
-            StackPane pane_3 = new StackPane();
-            pane_3.setPrefHeight(height);
-            pane_3.setCursor(Cursor.HAND);
-            pane_3.setOpacity(0);
-            pane_3.setUserData(y + 1);
+            StackPane rightArrow = crearFlechaFila(height, tamaño_letra, n_fila, "⮞", false);
+            rightVBox.getChildren().add(rightArrow);
 
-            Label flecha_der = new Label("⮞");
-            flecha_der.setStyle("-fx-font-size: " + tamaño_letra + "px;");
-            flecha_der.setMouseTransparent(true);
-
-            pane_3.getChildren().add(flecha_der);
-            StackPane.setAlignment(flecha_der, Pos.CENTER_RIGHT);
-
-            rightVBox.getChildren().add(pane_3);
-
-            pane_3.setOnMouseEntered(e -> mouseEnteredArrow(pane_3));
-            pane_3.setOnMouseExited(e -> mouseExitedArrow(pane_3));
-            pane_3.setOnMouseClicked(e -> moveRowForward(n_fila));
-
+            // creación casillas con letras
             for (int x = 0; x < fila.size(); x++) {
-                int coordX = x;
-                int coordY = y;
+
                 Letra l = fila.get(x); //Obtengo mi elemento por columna
-                Character c = l.getLetra(); //Extraigo el valor del objeto letra
 
-                //creación letras
-                StackPane pane = new StackPane();
-                pane.setPrefSize(width, height);
-                pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
-                pane.setCursor(Cursor.HAND);
-                pane.setUserData(l);
-
-                Label contenedor = new Label(String.valueOf(c)); //Lo contengo en un label para mostrar
-                contenedor.setMouseTransparent(true);
-
-                contenedor.setStyle("-fx-font-family: 'Tahoma'; -fx-font-size: " + tamaño_letra + "px;");
-
-                Pane fondo = new Pane();
-                fondo.setStyle("-fx-background-color: #3999FF;");
-                fondo.setMouseTransparent(true);
-                fondo.setOpacity(0.25 * l.getUsos());
-
-                pane.getChildren().add(fondo);
-                pane.getChildren().add(contenedor);
-                StackPane.setAlignment(contenedor, Pos.CENTER);
-
-                pane.setOnMouseClicked(t -> seleccionarLetra(fondo, l, coordX, coordY));
-
-                pane.setOnMouseEntered(mouseEnteredLetter);
-                pane.setOnMouseExited(mouseExitedLetter);
-                pane.setOnMousePressed(mouseExitedLetter);
-                pane.setOnMouseReleased(mouseEnteredLetter);
+                StackPane pane = crearCasilla(width, height, tamaño_letra, l);
 
                 gridpane.add(pane, x, y); //Agrego al gridpane el contener en la posicion X,Y
 
             }
-
         }
 
         // Creación flechas para mover Columnas
         for (int i = 0; i < sopaDeLetras.getN_columnas(); i++) {
 
-            StackPane pane_4 = new StackPane();
-            pane_4.setPrefSize(width, 30);
-            pane_4.setCursor(Cursor.HAND);
-            pane_4.setOpacity(0);
-            pane_4.setUserData(i + 1);
-
-            Label flecha_aba = new Label("⮟");
-            flecha_aba.setStyle("-fx-font-size: " + tamaño_letra * 0.8 + "px;");
-            flecha_aba.setMouseTransparent(true);
-
-            pane_4.getChildren().add(flecha_aba);
-            StackPane.setAlignment(flecha_aba, Pos.CENTER);
-
-            bottomHBox.getChildren().add(pane_4);
-
             int n_columna = i + 1;
 
-            pane_4.setOnMouseEntered(e -> mouseEnteredArrow(pane_4));
-            pane_4.setOnMouseExited(e -> mouseExitedArrow(pane_4));
-            pane_4.setOnMouseClicked(e -> moveColumnForward(n_columna));
+            StackPane down_arrow = crearFlechaColumna(width, tamaño_letra, n_columna, "⮟", false);
+            bottomHBox.getChildren().add(down_arrow);
 
-            StackPane pane_5 = new StackPane();
-            pane_5.setPrefSize(width, 30);
-            pane_5.setCursor(Cursor.HAND);
-            pane_5.setOpacity(0);
-            pane_5.setUserData(i + 1);
-
-            Label flecha_arr = new Label("⮝");
-            flecha_arr.setStyle("-fx-font-size: " + tamaño_letra * 0.8 + "px;");
-            flecha_arr.setMouseTransparent(true);
-
-            pane_5.getChildren().add(flecha_arr);
-            StackPane.setAlignment(flecha_arr, Pos.CENTER);
-
-            topHBox.getChildren().add(pane_5);
-
-            pane_5.setOnMouseEntered(e -> mouseEnteredArrow(pane_5));
-            pane_5.setOnMouseExited(e -> mouseExitedArrow(pane_5));
-            pane_5.setOnMouseClicked(e -> moveColumnBackwards(n_columna));
+            StackPane up_arrow = crearFlechaColumna(width, tamaño_letra, n_columna, "⮝", true);
+            topHBox.getChildren().add(up_arrow);
         }
 
         panelCentral.getChildren().add(gridpane);
 
     }
 
-    // EVENT HANDLERS
-    EventHandler<MouseEvent> mouseEnteredLetter = (event) -> {
+    private StackPane crearCasilla(double width, double height, double tamaño_letra, Letra l) {
 
-        StackPane p = (StackPane) event.getTarget();
-        Letra l = (Letra) p.getUserData();
-        int n_fila = l.getFila();
-        int n_columna = l.getColumna();
+        Character c = l.getLetra(); //Extraigo el valor del objeto letra
+        //creación letras
+        StackPane pane = new StackPane();
+        pane.setPrefSize(width, height);
+        pane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
+        pane.setCursor(Cursor.HAND);
+
+        Label letra = new Label(String.valueOf(c)); //Lo contengo en un label para mostrar
+        letra.setMouseTransparent(true);
+
+        letra.setStyle("-fx-font-family: 'Tahoma'; -fx-font-size: " + tamaño_letra + "px;");
+
+        Pane fondo = new Pane();
+        fondo.setStyle("-fx-background-color: #5169FF;");
+        fondo.setMouseTransparent(true);
+        fondo.setOpacity(0.20 * l.getUsos());
+        if (l.getUsos() == 5) {
+            pane.setDisable(true);
+            letra.setVisible(false);
+        }
+
+        pane.getChildren().add(fondo);
+        pane.getChildren().add(letra);
+        StackPane.setAlignment(letra, Pos.CENTER);
+
+        pane.setOnMouseClicked(t -> seleccionarLetra(fondo, l));
+
+        pane.setOnMouseEntered(e -> mouseEnteredLetter(pane, l));
+        pane.setOnMouseExited(e -> mouseExitedLetter(pane, l));
+        pane.setOnMousePressed(e -> mouseExitedLetter(pane, l));
+        pane.setOnMouseReleased(e -> mouseEnteredLetter(pane, l));
+
+        return pane;
+
+    }
+
+    private StackPane crearFlechaColumna(double width, double tamaño_letra, int n_columna, String flecha, boolean up) {
+
+        StackPane pane = new StackPane();
+        pane.setPrefSize(width, 30);
+        pane.setCursor(Cursor.HAND);
+        pane.setOpacity(0);
+
+        Label arrow = new Label(flecha);
+        arrow.setStyle("-fx-font-size: " + tamaño_letra * 0.8 + "px;");
+        arrow.setMouseTransparent(true);
+
+        pane.getChildren().add(arrow);
+        StackPane.setAlignment(arrow, Pos.CENTER);
+
+        pane.setOnMouseEntered(e -> mouseEnteredArrow(pane));
+        pane.setOnMouseExited(e -> mouseExitedArrow(pane));
+
+        if (up) {
+            pane.setOnMouseClicked(e -> moveColumnBackwards(n_columna));
+        } else {
+            pane.setOnMouseClicked(e -> moveColumnForward(n_columna));
+        }
+
+        return pane;
+    }
+
+    private StackPane crearFlechaFila(double height, double tamaño_letra, int n_fila, String flecha, boolean left) {
+        StackPane pane = new StackPane();
+        pane.setPrefHeight(height);
+        pane.setCursor(Cursor.HAND);
+        pane.setOpacity(0);
+
+        Label arrow = new Label(flecha);
+        arrow.setStyle("-fx-font-size: " + tamaño_letra + "px;");
+        arrow.setMouseTransparent(true);
+
+        pane.getChildren().add(arrow);
+        StackPane.setAlignment(arrow, Pos.CENTER_RIGHT);
+
+        pane.setOnMouseEntered(e -> mouseEnteredArrow(pane));
+        pane.setOnMouseExited(e -> mouseExitedArrow(pane));
+
+        if (left) {
+            pane.setOnMouseClicked(e -> moveRowBackwards(n_fila));
+        } else {
+            pane.setOnMouseClicked(e -> moveRowForward(n_fila));
+        }
+
+        return pane;
+
+    }
+
+    private void mouseEnteredLetter(StackPane p, Letra l) {
+
+        int n_fila = l.getFila() - 1;
+        int n_columna = l.getColumna() - 1;
 
         if (modoEliminarColumna || modoAgregarColumna) {
             gridpane.getChildren().stream()
-                    .filter((Node n) -> ((Letra) n.getUserData()).getColumna() == n_columna)
+                    .filter((Node n) -> (GridPane.getColumnIndex(n) == n_columna))
                     .forEach((Node n) -> n.setStyle(n.getStyle() + " -fx-background-color: #BFE1FF;"));
         } else if (modoEliminarFila || modoAgregarFila) {
             gridpane.getChildren().stream()
-                    .filter((Node n) -> ((Letra) n.getUserData()).getFila() == n_fila)
+                    .filter((Node n) -> (GridPane.getRowIndex(n) == n_fila))
                     .forEach((Node n) -> n.setStyle(n.getStyle() + " -fx-background-color: #BFE1FF;"));
         } else {
             p.setStyle(p.getStyle() + " -fx-background-color: #BFE1FF;");
         }
-        event.consume();
-    };
+    }
 
-    EventHandler<MouseEvent> mouseExitedLetter = (event) -> {
-        StackPane p = (StackPane) event.getTarget();
-        Letra l = (Letra) p.getUserData();
-        int n_fila = l.getFila();
-        int n_columna = l.getColumna();
+    private void mouseExitedLetter(StackPane p, Letra l) {
+
+        int n_fila = l.getFila() - 1;
+        int n_columna = l.getColumna() - 1;
 
         if (modoEliminarColumna || modoAgregarColumna) {
             gridpane.getChildren().stream()
-                    .filter((Node n) -> ((Letra) n.getUserData()).getColumna() == n_columna)
+                    .filter((Node n) -> (GridPane.getColumnIndex(n) == n_columna))
                     .forEach((Node n) -> n.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;"));
         } else if (modoEliminarFila || modoAgregarFila) {
             gridpane.getChildren().stream()
-                    .filter((Node n) -> ((Letra) n.getUserData()).getFila() == n_fila)
+                    .filter((Node n) -> (GridPane.getRowIndex(n) == n_fila))
                     .forEach((Node n) -> n.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;"));
         } else {
             p.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
         }
-
-        event.consume();
-    };
+    }
 
     private void mouseEnteredArrow(StackPane p) {
         FadeTransition f = new FadeTransition(Duration.millis(250), p);
@@ -349,53 +342,38 @@ public class SopaController implements Initializable {
         refrescarSopa();
     }
 
-    public void seleccionarLetra(Pane fondo, Letra l, int posicionX, int posicionY) {
+    public void seleccionarLetra(Pane fondo, Letra l) {
         //Extensión para Modificaciones
 
         if (modoAgregarFila || modoAgregarColumna || modoEliminarFila || modoEliminarColumna) {
-            if (modoAgregarFila) {
-                Partida.sopa.insertarFila(l.getFila());
-                modoAgregarFila = false;
-            } else if (modoAgregarColumna) {
-                Partida.sopa.insertarColumna(l.getColumna());
-                modoAgregarColumna = false;
-            } else if (modoEliminarFila) {
-                Partida.sopa.eliminarFila(l.getFila());
-                modoEliminarFila = false;
-            } else {
-                Partida.sopa.eliminarColumna(l.getColumna());
-                modoEliminarColumna = false;
-            }
+            modificacion(l);
 
-            jugadorActual.modifica();
-            comprobarModificaciones();
-
-            refrescarSopa();
         } else {
 
-            //TODO Implementacion del click (Donaí)
+            // Implementacion del click
             if (letras.isEmpty()) { // No se ha seleccionado ninguna palabra, es la primera letra
                 letras.addLast(l);
                 fondo.setOpacity(fondo.getOpacity() + 0.20);
                 fondos.addLast(fondo);
-                System.out.println(letras);
-            } else { // comprobar si esta en los costados. 
+
+            } else if (!letras.contains(l)) { // comprobar que no haya sido agregada en el mismo intento
+
+                // comprobar si esta en los costados
                 int size = letras.size();
                 Letra previous = letras.get(size - 1);
                 int actualX = l.getColumna();
                 int actualY = l.getFila();
 
-                //comprobar si estan juntas.^w^
+                // comprobar si estan juntas
                 if ((actualX + 1 == previous.getColumna() || previous.getColumna() == actualX - 1 || previous.getColumna() == actualX)
                         && (previous.getFila() == actualY + 1 || previous.getFila() == actualY - 1 || previous.getFila() == actualY)
                         && (actualX != previous.getColumna() || actualY != previous.getFila())) {
                     letras.addLast(l);
+
                     // Oscureciendo la casilla
                     fondo.setOpacity(fondo.getOpacity() + 0.20);
                     fondos.addLast(fondo);
                     System.out.println(letras);
-                } else {
-                    System.out.println("La letra " + l + "Debe estar junto a su palabra");
                 }
             }
 
@@ -403,9 +381,31 @@ public class SopaController implements Initializable {
 
     }
 
+    private void modificacion(Letra l) {
+        if (modoAgregarFila) {
+            Partida.sopa.insertarFila(l.getFila());
+            modoAgregarFila = false;
+        } else if (modoAgregarColumna) {
+            Partida.sopa.insertarColumna(l.getColumna());
+            modoAgregarColumna = false;
+        } else if (modoEliminarFila) {
+            Partida.sopa.eliminarFila(l.getFila());
+            modoEliminarFila = false;
+        } else {
+            Partida.sopa.eliminarColumna(l.getColumna());
+            modoEliminarColumna = false;
+        }
+
+        jugadorActual.modifica();
+        comprobarModificaciones();
+        
+        refrescarSopa();
+    }
+
     private void refrescarSopa() {
         generarSopa();
         gridpane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
+        letras = new ArrayList();
     }
 
     private void cambiarTurno() {
@@ -436,34 +436,30 @@ public class SopaController implements Initializable {
         }
     }
 
-    private void quitarVidaJugadorActual() {
-        if (jugadorActual == Partida.jugadorUno) {
-            vidasJ1.getChildren().remove(vidasJ1.getChildren().size() - 1);
-        } else {
-            vidasJ2.getChildren().remove(vidasJ2.getChildren().size() - 1);
-        }
-    }
-
     private void actualizarTimers() {
-        if (jugadorActual == Partida.jugadorUno) {
+        if (getTurno() == 1) {
             if (segundosJugadorUno > 60) {
                 segundosJugadorUno--;
                 timerPlayerOne.setText(String.format("0%d:%02d", segundosJugadorUno / 60, segundosJugadorUno - 60));
-            } else {
+            } else if (segundosJugadorUno > 0) {
                 segundosJugadorUno--;
-                timerPlayerOne.setText(String.format("00:%d", segundosJugadorUno));
+                timerPlayerOne.setText(String.format("00:%02d", segundosJugadorUno));
+            } else if (Partida.jugadorDos != null) {
+                cambiarTurno();
             }
         } else {
             if (segundosJugadorDos > 60) {
                 segundosJugadorDos--;
                 timerPlayerTwo.setText(String.format("0%d:%02d", segundosJugadorDos / 60, segundosJugadorDos - 60));
-            } else {
+            } else if (segundosJugadorDos > 0) {
                 segundosJugadorDos--;
-                timerPlayerTwo.setText(String.format("00:%d", segundosJugadorDos));
+                timerPlayerTwo.setText(String.format("00:%02d", segundosJugadorDos));
+            } else {
+                cambiarTurno();
             }
         }
 
-        if (segundosJugadorUno == 0 || segundosJugadorDos == 0) {
+        if (segundosJugadorUno == 0 && segundosJugadorDos == 0) {
             terminarJuego();
         }
     }
@@ -486,14 +482,13 @@ public class SopaController implements Initializable {
             HBoxVidas.getChildren().remove(0);
         } else {
             String cantidadPalabras = "" + jugador.getNumeroPalabrasEncontradas();
-            Platform.runLater(() -> lblpalabras.setText(cantidadPalabras));
+            lblpalabras.setText(cantidadPalabras);
         }
     }
 
     private void casoPorTurno(int turno, Boolean bool) {
         switch (turno) {
             case 1:
-                System.out.println("turno 1 ");
                 modificarLabel(jugadorActual, lblPuntosJ1, vidasJ1, lblPalabrasJ1, bool);
                 break;
             case 2:
@@ -501,33 +496,32 @@ public class SopaController implements Initializable {
                 break;
         }
     }
-    
-    void AbrirVentana(Intento intento){
+
+    void AbrirVentana(Intento intento) {
         VBox rootNuevaVentana = new VBox();
         Label label = new Label();
-        
-        switch(intento){
+
+        switch (intento) {
             case ERROR:
                 label.setText("MmmMmmM ¿Ha escuchado sobre la RAE? porque esa palabra no existe");
                 break;
             case YA_ENCONTRADA:
                 label.setText("Oiga, ya encontró esa, busque otra");
-                break;           
+                break;
         }
         Button b = new Button("Ok");
-                              
-        rootNuevaVentana.getChildren().addAll(label,b);
+
+        rootNuevaVentana.getChildren().addAll(label, b);
         rootNuevaVentana.setAlignment(Pos.CENTER);
         rootNuevaVentana.setSpacing(20);
-        rootNuevaVentana.setPadding(new Insets(10,15,10,15));        
-        Stage s = new Stage();  
+        rootNuevaVentana.setPadding(new Insets(10, 15, 10, 15));
+        Stage s = new Stage();
         Scene sce = new Scene(rootNuevaVentana);
-        b.setOnAction( t -> s.close() ); 
+        b.setOnAction(t -> s.close());
         s.setScene(sce);
         s.setTitle("Mensaje");
         s.show();
-                
-        
+
     }
 
     private void terminarJuego() {
@@ -572,7 +566,9 @@ public class SopaController implements Initializable {
 
     @FXML
     private void enviarPalabra() {
-        if(letras.isEmpty()) return;
+        if (letras.isEmpty()) {
+            return;
+        }
         Palabra p = new Palabra(letras, jugadorActual);
         System.out.println(p);
         Intento intento = p.comprobar(); // comprobar inserta la palabra en las encontradas
@@ -583,22 +579,21 @@ public class SopaController implements Initializable {
                 AbrirVentana(Intento.ERROR);
                 jugadorActual.quitarVida();
                 casoPorTurno(getTurno(), true);
-                for(Pane fondo: fondos){
-                    fondo.setOpacity(0);
-                }
+                refrescarSopa();
                 break;
             case YA_ENCONTRADA:
                 System.out.println("Oiga, ya encontró esa, busque otra");
                 AbrirVentana(Intento.YA_ENCONTRADA);
+                refrescarSopa();
                 break;
             case ACIERTO:
                 System.out.println("¡Bien, ahora recopilemos los puntos!");
                 casoPorTurno(getTurno(), false);
+                refrescarSopa();
                 break;
         }
         if (Partida.jugadorDos != null) {
             cambiarTurno();
         }
-        letras.clear();
     }
 }

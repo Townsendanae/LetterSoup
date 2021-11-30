@@ -6,6 +6,7 @@ import TDAs.CircularDoublyLinkedList;
 import TDAs.DoublyLinkedList;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,9 +47,9 @@ public abstract class Partida {
         xtreme = xtreme_mode;
         validas = new ArrayList((idioma == Idiomas.SPANISH)?50000:2000);
         actualizarPalabrasValidas();
-        System.out.println(validas.get(0));
-        System.out.println(validas.get(1));
-        System.out.println(validas.contains("LIO"));
+        /*for(String palabra: validas){
+            System.out.println(palabra);
+        }*/
     }
     
     public static void nuevaPartidaDosJugadores(int n_filas, int n_columnas, int bet, boolean xtreme_mode){
@@ -85,8 +86,8 @@ public abstract class Partida {
                 }
             }
         }
-        
-        try(BufferedReader bf = new BufferedReader(new FileReader(idioma.ruta))){
+        Charset inputCharset = Charset.forName("UTF-8");
+        try(BufferedReader bf = new BufferedReader(new FileReader(idioma.ruta, inputCharset))){
              
             String palabra;
             while((palabra = bf.readLine()) != null){
@@ -131,5 +132,6 @@ public abstract class Partida {
             }
             
         }catch(Exception e){}
+        System.out.println(validas.size());
     }
 }
