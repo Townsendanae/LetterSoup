@@ -193,6 +193,15 @@ public class ArrayList<E> implements List<E>{
     }
     
     @Override
+    public String toString(){
+        String s = "";
+        for (int i = 0;i < effectiveSize; i++){
+            s += elements[i] + ", ";
+        }
+        return s;
+    }
+    
+    @Override
     public Iterator<E> iterator() {
         
         Iterator<E> it = new Iterator<E>(){
