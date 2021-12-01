@@ -40,6 +40,7 @@ public abstract class Partida {
     
     public static void nuevaPartidaUnJugador(int n_filas, int n_columnas, int bet, boolean xtreme_mode){
         encontradas.clear();
+        encontradas_string.clear();
         jugadorUno = new Jugador();
         jugadorDos = null;
         sopa = new Sopa(n_filas, n_columnas);
@@ -47,9 +48,6 @@ public abstract class Partida {
         xtreme = xtreme_mode;
         validas = new ArrayList((idioma == Idiomas.SPANISH)?50000:2000);
         actualizarPalabrasValidas();
-        /*for(String palabra: validas){
-            System.out.println(palabra);
-        }*/
     }
     
     public static void nuevaPartidaDosJugadores(int n_filas, int n_columnas, int bet, boolean xtreme_mode){
@@ -96,11 +94,6 @@ public abstract class Partida {
                 boolean valida = true;
                 
                 if(palabra.length() == 1) continue;
-                if(sopa.getN_columnas() >= sopa.getN_filas()){
-                    if(palabra.length() > sopa.getN_columnas()) continue;
-                }else{
-                    if(palabra.length() > sopa.getN_filas()) continue;
-                }
                 
                 if(idioma == Idiomas.SPANISH){
                     palabra = palabra.replace("á","a");

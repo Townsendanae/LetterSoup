@@ -19,8 +19,8 @@
          <children>
             <Pane prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button layoutX="27.0" layoutY="13.0" mnemonicParsing="false" onAction="#exitToMenu" text="Menú" />
-                  <Button layoutX="24.0" layoutY="49.0" mnemonicParsing="false" onAction="#shuffle" text="Shuffle" />
+                  <Button fx:id="btnMenu" layoutX="27.0" layoutY="13.0" mnemonicParsing="false" onAction="#exitToMenu" text="Menú" />
+                  <Button fx:id="btnShuffle" layoutX="24.0" layoutY="49.0" mnemonicParsing="false" onAction="#shuffle" text="Mezclar" />
                </children>
             </Pane>
             <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="500.0">
@@ -31,7 +31,7 @@
                            <children>
                               <HBox alignment="BOTTOM_LEFT" prefHeight="35.0" prefWidth="250.0">
                                  <children>
-                                    <Label text="VIDAS :  ">
+                                    <Label fx:id="Lifes1" text="VIDAS :  ">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
@@ -58,7 +58,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="250.0">
                                  <children>
-                                    <Label text="PALABRAS : ">
+                                    <Label fx:id="LabelPalabras1" text="PALABRAS : ">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
@@ -68,7 +68,7 @@
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label text="PUNTOS : ">
+                                    <Label fx:id="Score1" text="PUNTOS : ">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
@@ -89,7 +89,7 @@
                            <children>
                               <HBox alignment="BOTTOM_LEFT" prefHeight="35.0" prefWidth="250.0">
                                  <children>
-                                    <Label text="VIDAS :  ">
+                                    <Label fx:id="Lifes2" text="VIDAS :  ">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
@@ -115,7 +115,7 @@
                                  </VBox.margin></HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="250.0">
                                  <children>
-                                    <Label text="PALABRAS : ">
+                                    <Label fx:id="LabelPalabras2" text="PALABRAS : ">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
@@ -125,7 +125,7 @@
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label text="PUNTOS : ">
+                                    <Label fx:id="Score2" text="PUNTOS : ">
                                        <font>
                                           <Font name="Tahoma Bold" size="15.0" />
                                        </font>
@@ -162,10 +162,10 @@
                   <HBox fx:id="bottomHBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="200.0" />
                   <HBox fx:id="buttons" alignment="CENTER" prefHeight="70.0" prefWidth="500.0" spacing="30.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#agregarFila" text="Agregar FIla" />
-                        <Button mnemonicParsing="false" onAction="#eliminarFila" text="Eliminar FIla" />
-                        <Button mnemonicParsing="false" onAction="#agregarColumna" text="Agregar Columna" />
-                        <Button mnemonicParsing="false" onAction="#eliminarColumna" text="Eliminar Columna" />
+                        <Button fx:id="btnAddRow" mnemonicParsing="false" onAction="#agregarFila" text="Agregar FIla" />
+                        <Button fx:id="btnDelRow" mnemonicParsing="false" onAction="#eliminarFila" text="Eliminar FIla" />
+                        <Button fx:id="btnAddCol" mnemonicParsing="false" onAction="#agregarColumna" text="Agregar Columna" />
+                        <Button fx:id="btnDelCol" mnemonicParsing="false" onAction="#eliminarColumna" text="Eliminar Columna" />
                      </children>
                   </HBox>
                </children>
