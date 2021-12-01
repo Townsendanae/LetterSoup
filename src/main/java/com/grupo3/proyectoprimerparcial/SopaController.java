@@ -113,8 +113,8 @@ public class SopaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
-        if(Partida.idioma == Idiomas.ENGLISH){
+
+        if (Partida.idioma == Idiomas.ENGLISH) {
             btnMenu.setText("Menu");
             btnShuffle.setText("Shuffle");
             Lifes1.setText("LIFES : ");
@@ -161,10 +161,8 @@ public class SopaController implements Initializable {
             timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> actualizarTimers()));
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
-            
-        }
-      
 
+        }
 
     }
 
@@ -445,9 +443,9 @@ public class SopaController implements Initializable {
 
         jugadorActual.modifica();
         comprobarModificaciones();
-        
+
         refrescarSopa();
-        if(Partida.validas.size()==0){
+        if (Partida.validas.size() == 0) {
             GameOver();
         }
     }
@@ -460,10 +458,10 @@ public class SopaController implements Initializable {
 
     private void cambiarTurno() {
         //Solo realiza cambio de turno cuando a quien voy a cambiar aun posee vidas
-        if(jugadorActual == Partida.jugadorUno && Partida.jugadorDos.getVidas()!=0){
-            jugadorActual=Partida.jugadorDos;
-        }else if(jugadorActual == Partida.jugadorDos && Partida.jugadorUno.getVidas()!=0){
-            jugadorActual=Partida.jugadorUno;
+        if (jugadorActual == Partida.jugadorUno && Partida.jugadorDos.getVidas() != 0) {
+            jugadorActual = Partida.jugadorDos;
+        } else if (jugadorActual == Partida.jugadorDos && Partida.jugadorUno.getVidas() != 0) {
+            jugadorActual = Partida.jugadorUno;
         }
 
         if (jugadorActual == Partida.jugadorUno) {
@@ -516,7 +514,7 @@ public class SopaController implements Initializable {
 
         if (segundosJugadorUno == 0 && segundosJugadorDos == 0) {
             GameOver();
-            
+
         }
     }
 
@@ -632,22 +630,21 @@ public class SopaController implements Initializable {
         switch (intento) {
             case ERROR:
                 System.out.println("MmmMmmM ¿Ha escuchado sobre la RAE? porque esa palabra no existe");
-                if(jugadorActual.getVidas()!=0){
+                if (jugadorActual.getVidas() != 0) {
                     AbrirVentana(Intento.ERROR);
                 }
                 casoPorTurno(getTurno(), true);
                 refrescarSopa();
-                if(Partida.jugadorDos==null){
-                    if(jugadorActual.getVidas()==0){
-                    GameOver();
+                if (Partida.jugadorDos == null) {
+                    if (jugadorActual.getVidas() == 0) {
+                        GameOver();
                     }
-                }else{
-                    if(Partida.jugadorUno.getVidas()==0 && Partida.jugadorDos.getVidas()==0){
-                    GameOver();
+                } else {
+                    if (Partida.jugadorUno.getVidas() == 0 && Partida.jugadorDos.getVidas() == 0) {
+                        GameOver();
+                    }
                 }
-                }
-                
-                
+
                 break;
             case YA_ENCONTRADA:
                 System.out.println("Oiga, ya encontró esa, busque otra");
@@ -660,54 +657,54 @@ public class SopaController implements Initializable {
                 refrescarSopa();
                 break;
         }
-        if (Partida.jugadorDos != null ) {
+        if (Partida.jugadorDos != null) {
             cambiarTurno();
         }
     }
-    
-    private void GameOver(){
-        if(Partida.xtreme){
+
+    private void GameOver() {
+        if (Partida.xtreme) {
             timer.stop();
         }
-        if(Partida.jugadorDos==null){
-                Alert a=new Alert(AlertType.INFORMATION);
-                a.setTitle("GAME OVER");
-                a.setHeaderText(null);
-                a.setContentText("Tu puntaje es: "+jugadorActual.getPuntos());
-                a.show();
-
-                try {
-                    App.setRoot("MainMenu");
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-        }else{
-            Alert a=new Alert(AlertType.INFORMATION);
+        if (Partida.jugadorDos == null) {
+            Alert a = new Alert(AlertType.INFORMATION);
             a.setTitle("GAME OVER");
             a.setHeaderText(null);
-            if(Partida.jugadorUno.getPuntos()>Partida.jugadorDos.getPuntos()){
-                a.setContentText("Gana el jugador 1\nPuntaje Jugador 1: "+Partida.jugadorUno.getPuntos()
-                        +"\nPuntaje Jugador 2: "+Partida.jugadorDos.getPuntos());
+            String mensaje = "Tu puntaje es: " + jugadorActual.getPuntos();
+            if (Partida.apuesta > 0) {
+                mensaje = (jugadorActual.getPuntos() < Partida.apuesta)
+                        ? "PIERDES\n" + mensaje : "GANAS\n" + mensaje;
+            }
+            a.setContentText(mensaje);
+            a.show();
+
+            try {
+                App.setRoot("MainMenu");
+            } catch (IOException ex) {}
+            
+        } else {
+            Alert a = new Alert(AlertType.INFORMATION);
+            a.setTitle("GAME OVER");
+            a.setHeaderText(null);
+            if (Partida.jugadorUno.getPuntos() > Partida.jugadorDos.getPuntos()) {
+                a.setContentText("Gana el jugador 1\nPuntaje Jugador 1: " + Partida.jugadorUno.getPuntos()
+                        + "\nPuntaje Jugador 2: " + Partida.jugadorDos.getPuntos());
                 a.show();
-            }else if(Partida.jugadorUno.getPuntos()<Partida.jugadorDos.getPuntos()){
-                a.setContentText("Gana el jugador 2\nPuntaje Jugador 1: "+Partida.jugadorUno.getPuntos()
-                        +"\nPuntaje Jugador 2: "+Partida.jugadorDos.getPuntos());
+            } else if (Partida.jugadorUno.getPuntos() < Partida.jugadorDos.getPuntos()) {
+                a.setContentText("Gana el jugador 2\nPuntaje Jugador 1: " + Partida.jugadorUno.getPuntos()
+                        + "\nPuntaje Jugador 2: " + Partida.jugadorDos.getPuntos());
                 a.show();
-            }else{
-                a.setContentText("EMPATE TECNICO\nPuntaje Jugador 1: "+Partida.jugadorUno.getPuntos()
-                        +"\nPuntaje Jugador 2: "+Partida.jugadorDos.getPuntos());
+            } else {
+                a.setContentText("EMPATE TECNICO\nPuntaje Jugador 1: " + Partida.jugadorUno.getPuntos()
+                        + "\nPuntaje Jugador 2: " + Partida.jugadorDos.getPuntos());
                 a.show();
             }
 
             try {
                 App.setRoot("MainMenu");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-                
-    
+            } catch (IOException ex) {}
+
         }
     }
 
-          
 }

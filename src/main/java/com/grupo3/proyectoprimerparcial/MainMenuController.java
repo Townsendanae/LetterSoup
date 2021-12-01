@@ -155,6 +155,7 @@ public class MainMenuController implements Initializable{
         multiplayer.setOpacity(0);
         singleplayer.setOpacity(0.85);
         jugadores = 2;
+        betLabel.setText("0");
     }
     
     @FXML
@@ -180,15 +181,20 @@ public class MainMenuController implements Initializable{
     @FXML
     private void minusBet(MouseEvent event) {
         int apuesta = Integer.parseInt(betLabel.getText());
-        if(apuesta > 0) betLabel.setText(String.valueOf(apuesta-100));
-        if(apuesta == 999) betLabel.setText(String.valueOf(apuesta-99));
+        if(apuesta > 0) betLabel.setText(String.valueOf(apuesta-10));
+        if(apuesta == 99) betLabel.setText(String.valueOf(apuesta-9));
     }
 
     @FXML
     private void plusBet(MouseEvent event) {
+        
+        singleplayer.setOpacity(0);
+        multiplayer.setOpacity(0.85);
+        jugadores = 1;
+        
         int apuesta = Integer.parseInt(betLabel.getText());
-        if(apuesta < 900) betLabel.setText(String.valueOf(apuesta+100));
-        if(apuesta == 900) betLabel.setText(String.valueOf(apuesta+99));
+        if(apuesta < 90) betLabel.setText(String.valueOf(apuesta+10));
+        if(apuesta == 90) betLabel.setText(String.valueOf(apuesta+9));
     }
 
     private void clickTimer(Pane p){
