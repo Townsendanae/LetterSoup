@@ -84,7 +84,7 @@ public class MainMenuController implements Initializable{
     @FXML
     private void minusRow(MouseEvent event) {
         int rows = Integer.parseInt(rowsLabel.getText());
-        if(rows > 5) rowsLabel.setText(String.valueOf(--rows));
+        if(rows > 6) rowsLabel.setText(String.valueOf(--rows));
     }
 
     @FXML
@@ -96,7 +96,7 @@ public class MainMenuController implements Initializable{
     @FXML
     private void minusColumn(MouseEvent event) {
         int columns = Integer.parseInt(columnsLabel.getText());
-        if(columns > 5) columnsLabel.setText(String.valueOf(--columns));
+        if(columns > 6) columnsLabel.setText(String.valueOf(--columns));
     }
 
     @FXML
