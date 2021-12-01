@@ -124,7 +124,6 @@ public abstract class Partida {
                 }
             }
             
-        }catch(Exception e){}
-        System.out.println(validas.size());
+        }catch(Exception e){}        
     }
 }

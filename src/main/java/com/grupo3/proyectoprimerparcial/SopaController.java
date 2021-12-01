@@ -420,8 +420,7 @@ public class SopaController implements Initializable {
                     // Oscureciendo la casilla
                     fondo.setOpacity(fondo.getOpacity() + 0.20);
                     fondos.addLast(fondo);
-                    System.out.println(letras);
-                }
+                    }
             }
 
         }
@@ -559,10 +558,12 @@ public class SopaController implements Initializable {
 
         switch (intento) {
             case ERROR:
-                label.setText("MmmMmmM ¿Ha escuchado sobre la RAE? porque esa palabra no existe");
+                if (Partida.idioma == Idiomas.SPANISH) label.setText("MmmMmmM ¿Ha escuchado sobre la RAE? porque esa palabra no existe");
+                else label.setText("Have you heard about The Cambridge Dictionary? That word doesn't exist");
                 break;
             case YA_ENCONTRADA:
-                label.setText("Oiga, ya encontró esa, busque otra");
+                if (Partida.idioma == Idiomas.SPANISH) label.setText("Oiga, ya encontró esa, busque otra");
+                else label.setText("Hey, you already found that one, look for another :)");
                 break;
         }
         Button b = new Button("Ok");
@@ -621,14 +622,13 @@ public class SopaController implements Initializable {
         if (letras.isEmpty()) {
             return;
         }
-        Palabra p = new Palabra(letras, jugadorActual);
-        System.out.println(p);
+        Palabra p = new Palabra(letras, jugadorActual);       
         Intento intento = p.comprobar(); // comprobar inserta la palabra en las encontradas
 
         switch (intento) {
             case ERROR:
                 Sonidos.mistake();
-                System.out.println("MmmMmmM ¿Ha escuchado sobre la RAE? porque esa palabra no existe");
+                
                 if (jugadorActual.getVidas() != 0) {
                     AbrirVentana(Intento.ERROR);
                 }
@@ -645,14 +645,13 @@ public class SopaController implements Initializable {
                 }
 
                 break;
-            case YA_ENCONTRADA:
-                System.out.println("Oiga, ya encontró esa, busque otra");
+            case YA_ENCONTRADA:              
                 AbrirVentana(Intento.YA_ENCONTRADA);
                 refrescarSopa();
                 break;
-            case ACIERTO:
+        
+            case ACIERTO:               
                 Sonidos.success();
-                System.out.println("¡Bien, ahora recopilemos los puntos!");
                 casoPorTurno(getTurno(), false);
                 refrescarSopa();
                 break;
