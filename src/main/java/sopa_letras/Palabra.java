@@ -60,11 +60,9 @@ public class Palabra {
 
             jugador.agregarPalabra(palabra);
             Partida.agregarPalabra(this, palabra);
-            Partida.actualizarPalabrasValidas();
             
-            for(Letra letra: letras){
-                letra.usar();
-            }
+            for(Letra letra: letras){ letra.usar();}
+            Partida.actualizarPalabrasValidas();
             
             return Intento.ACIERTO;
         }

@@ -110,12 +110,12 @@ public abstract class Partida {
                     
                     Character c = palabra.charAt(i);
                     
-                    if(!usos.containsKey(c)) valida = false;
+                    if(!usos.containsKey(c) || usos.get(c) == 0) valida = false;
                     
                     if(!letras.containsKey(c)) letras.put(c, 1);
                     else{
                         letras.put(c, letras.get(c)+1);
-                        if(letras.get(c) > usos.get(c)) valida = false;
+                        if(letras.get(c) > usos.get(c) - (5 * (letras.get(c) - 1))) valida = false;
                     }
                 }
                 
@@ -124,6 +124,7 @@ public abstract class Partida {
                 }
             }
             
-        }catch(Exception e){}        
+        }catch(Exception e){}   
+        
     }
 }
