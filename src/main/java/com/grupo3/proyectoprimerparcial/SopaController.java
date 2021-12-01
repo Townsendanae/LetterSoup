@@ -16,6 +16,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -43,6 +45,7 @@ public class SopaController implements Initializable {
     private Jugador jugadorActual;
     private int segundosJugadorUno;
     private int segundosJugadorDos;
+    private Timeline timer;
 
     private boolean modoAgregarFila;
     private boolean modoEliminarFila;
@@ -110,7 +113,7 @@ public class SopaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+    
         if(Partida.idioma == Idiomas.ENGLISH){
             btnMenu.setText("Menu");
             btnShuffle.setText("Shuffle");
@@ -155,10 +158,13 @@ public class SopaController implements Initializable {
                 timerPlayerTwo.setText("01:30");
             }
 
-            Timeline timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> actualizarTimers()));
+            timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> actualizarTimers()));
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
+            
         }
+      
+
 
     }
 
@@ -441,6 +447,9 @@ public class SopaController implements Initializable {
         comprobarModificaciones();
         
         refrescarSopa();
+        if(Partida.validas.size()==0){
+            GameOver();
+        }
     }
 
     private void refrescarSopa() {
@@ -450,7 +459,12 @@ public class SopaController implements Initializable {
     }
 
     private void cambiarTurno() {
-        jugadorActual = ((jugadorActual == Partida.jugadorUno) ? Partida.jugadorDos : Partida.jugadorUno);
+        //Solo realiza cambio de turno cuando a quien voy a cambiar aun posee vidas
+        if(jugadorActual == Partida.jugadorUno && Partida.jugadorDos.getVidas()!=0){
+            jugadorActual=Partida.jugadorDos;
+        }else if(jugadorActual == Partida.jugadorDos && Partida.jugadorUno.getVidas()!=0){
+            jugadorActual=Partida.jugadorUno;
+        }
 
         if (jugadorActual == Partida.jugadorUno) {
             playerOnePane.setStyle("-fx-background-color: linear-gradient(from 0% 50% to 100% 50%, #65C0FF, white);");
@@ -501,7 +515,8 @@ public class SopaController implements Initializable {
         }
 
         if (segundosJugadorUno == 0 && segundosJugadorDos == 0) {
-            terminarJuego();
+            GameOver();
+            
         }
     }
 
@@ -617,10 +632,22 @@ public class SopaController implements Initializable {
         switch (intento) {
             case ERROR:
                 System.out.println("MmmMmmM ¿Ha escuchado sobre la RAE? porque esa palabra no existe");
-                AbrirVentana(Intento.ERROR);
-                jugadorActual.quitarVida();
+                if(jugadorActual.getVidas()!=0){
+                    AbrirVentana(Intento.ERROR);
+                }
                 casoPorTurno(getTurno(), true);
                 refrescarSopa();
+                if(Partida.jugadorDos==null){
+                    if(jugadorActual.getVidas()==0){
+                    GameOver();
+                    }
+                }else{
+                    if(Partida.jugadorUno.getVidas()==0 && Partida.jugadorDos.getVidas()==0){
+                    GameOver();
+                }
+                }
+                
+                
                 break;
             case YA_ENCONTRADA:
                 System.out.println("Oiga, ya encontró esa, busque otra");
@@ -633,8 +660,52 @@ public class SopaController implements Initializable {
                 refrescarSopa();
                 break;
         }
-        if (Partida.jugadorDos != null) {
+        if (Partida.jugadorDos != null ) {
             cambiarTurno();
         }
     }
+    
+    private void GameOver(){
+        if(Partida.xtreme){
+            timer.stop();
+        }
+        if(Partida.jugadorDos==null){
+                Alert a=new Alert(AlertType.INFORMATION);
+                a.setTitle("GAME OVER");
+                a.setContentText("Tu puntaje es: "+jugadorActual.getPuntos());
+                a.show();
+
+                try {
+                    App.setRoot("MainMenu");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+        }else{
+            Alert a=new Alert(AlertType.INFORMATION);
+            a.setTitle("GAME OVER");
+            if(Partida.jugadorUno.getPuntos()>Partida.jugadorDos.getPuntos()){
+                a.setContentText("Gana el jugador 1\nPuntaje Jugador 1: "+Partida.jugadorUno.getPuntos()
+                        +"\nPuntaje Jugador 2: "+Partida.jugadorDos.getPuntos());
+                a.show();
+            }else if(Partida.jugadorUno.getPuntos()<Partida.jugadorDos.getPuntos()){
+                a.setContentText("Gana el jugador 2\nPuntaje Jugador 1: "+Partida.jugadorUno.getPuntos()
+                        +"\nPuntaje Jugador 2: "+Partida.jugadorDos.getPuntos());
+                a.show();
+            }else{
+                a.setContentText("EMPATE TECNICO\nPuntaje Jugador 1: "+Partida.jugadorUno.getPuntos()
+                        +"\nPuntaje Jugador 2: "+Partida.jugadorDos.getPuntos());
+                a.show();
+            }
+
+            try {
+                App.setRoot("MainMenu");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+                
+    
+        }
+    }
+
+          
 }
