@@ -631,6 +631,7 @@ public class SopaController implements Initializable {
         if(Partida.jugadorDos==null){
                 Alert a=new Alert(AlertType.INFORMATION);
                 a.setTitle("GAME OVER");
+                a.setHeaderText(null);
                 a.setContentText("Tu puntaje es: "+jugadorActual.getPuntos());
                 a.show();
 
@@ -642,6 +643,7 @@ public class SopaController implements Initializable {
         }else{
             Alert a=new Alert(AlertType.INFORMATION);
             a.setTitle("GAME OVER");
+            a.setHeaderText(null);
             if(Partida.jugadorUno.getPuntos()>Partida.jugadorDos.getPuntos()){
                 a.setContentText("Gana el jugador 1\nPuntaje Jugador 1: "+Partida.jugadorUno.getPuntos()
                         +"\nPuntaje Jugador 2: "+Partida.jugadorDos.getPuntos());
