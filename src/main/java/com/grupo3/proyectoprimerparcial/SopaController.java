@@ -446,15 +446,16 @@ public class SopaController implements Initializable {
         comprobarModificaciones();
 
         refrescarSopa();
-        if (Partida.validas.size() == 0) {
-            GameOver();
-        }
+        
     }
 
     private void refrescarSopa() {
         generarSopa();
         gridpane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
         letras = new ArrayList();
+        if (Partida.validas.size() == 0) {
+            GameOver();
+        }
     }
 
     private void cambiarTurno() {
