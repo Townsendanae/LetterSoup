@@ -28,6 +28,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import partida.Idiomas;
 import partida.Jugador;
 import partida.Partida;
 import sopa_letras.Intento;
@@ -85,10 +86,50 @@ public class SopaController implements Initializable {
     private Label lblPuntosJ1;
     @FXML
     private Label lblPuntosJ2;
+    @FXML
+    private Button btnMenu;
+    @FXML
+    private Button btnShuffle;
+    @FXML
+    private Label Lifes1;
+    @FXML
+    private Label LabelPalabras1;
+    @FXML
+    private Label Score1;
+    @FXML
+    private Label Lifes2;
+    @FXML
+    private Label LabelPalabras2;
+    @FXML
+    private Label Score2;
+    @FXML
+    private Button btnAddRow;
+    @FXML
+    private Button btnDelRow;
+    @FXML
+    private Button btnAddCol;
+    @FXML
+    private Button btnDelCol;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+    
+        if(Partida.idioma == Idiomas.ENGLISH){
+            btnMenu.setText("Menu");
+            btnShuffle.setText("Shuffle");
+            Lifes1.setText("LIFES : ");
+            Lifes2.setText("LIFES : ");
+            Score1.setText("SCORE : ");
+            Score2.setText("SCORE : ");
+            LabelPalabras1.setText("WORDS : ");
+            LabelPalabras2.setText("WORDS : ");
+            btnAddRow.setText("Add Row");
+            btnAddCol.setText("Add Column");
+            btnDelRow.setText("Delete Row");
+            btnDelCol.setText("Delete Column");
+            btnEnviar.setText("Send");
+        }
+
         generarSopa();
         gridpane.setStyle("-fx-border-color: black; -fx-border-style: solid; -fx-border-width: 1px;");
         if (Partida.jugadorDos == null) {
