@@ -31,6 +31,7 @@ import javafx.util.Duration;
 import partida.Idiomas;
 import partida.Jugador;
 import partida.Partida;
+import partida.Sonidos;
 import sopa_letras.Intento;
 import sopa_letras.Letra;
 import sopa_letras.Palabra;
@@ -388,6 +389,7 @@ public class SopaController implements Initializable {
     }
 
     public void seleccionarLetra(Pane fondo, Letra l) {
+        Sonidos.letter();
         //Extensión para Modificaciones
 
         if (modoAgregarFila || modoAgregarColumna || modoEliminarFila || modoEliminarColumna) {
@@ -578,10 +580,6 @@ public class SopaController implements Initializable {
 
     }
 
-    private void terminarJuego() {
-        //TODO
-    }
-
     @FXML
     private void exitToMenu(ActionEvent event) throws IOException {
         App.setRoot("MainMenu");
@@ -629,6 +627,7 @@ public class SopaController implements Initializable {
 
         switch (intento) {
             case ERROR:
+                Sonidos.mistake();
                 System.out.println("MmmMmmM ¿Ha escuchado sobre la RAE? porque esa palabra no existe");
                 if (jugadorActual.getVidas() != 0) {
                     AbrirVentana(Intento.ERROR);
@@ -652,6 +651,7 @@ public class SopaController implements Initializable {
                 refrescarSopa();
                 break;
             case ACIERTO:
+                Sonidos.success();
                 System.out.println("¡Bien, ahora recopilemos los puntos!");
                 casoPorTurno(getTurno(), false);
                 refrescarSopa();

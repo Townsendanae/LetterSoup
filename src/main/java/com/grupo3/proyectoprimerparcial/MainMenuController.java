@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import partida.Idiomas;
 import partida.Partida;
+import partida.Sonidos;
 
 public class MainMenuController implements Initializable{
     
@@ -83,35 +84,41 @@ public class MainMenuController implements Initializable{
 
     @FXML
     private void minusRow(MouseEvent event) {
+        Sonidos.clickOne();
         int rows = Integer.parseInt(rowsLabel.getText());
         if(rows > 5) rowsLabel.setText(String.valueOf(--rows));
     }
 
     @FXML
     private void plusRow(MouseEvent event) {
+        Sonidos.clickOne();
         int rows = Integer.parseInt(rowsLabel.getText());
         if(rows < 20) rowsLabel.setText(String.valueOf(++rows));
     }
 
     @FXML
     private void minusColumn(MouseEvent event) {
+        Sonidos.clickOne();
         int columns = Integer.parseInt(columnsLabel.getText());
         if(columns > 5) columnsLabel.setText(String.valueOf(--columns));
     }
 
     @FXML
     private void plusColumn(MouseEvent event) {
+        Sonidos.clickOne();
         int columns = Integer.parseInt(columnsLabel.getText());
         if(columns < 20) columnsLabel.setText(String.valueOf(++columns));
     }
 
     @FXML
     private void previousLanguage(MouseEvent event) {
+        Sonidos.clickThree();
         cambiarIdioma();
     }
 
     @FXML
     private void nextLanguage(MouseEvent event) {
+        Sonidos.clickThree();
         cambiarIdioma();
     }
     
@@ -137,14 +144,13 @@ public class MainMenuController implements Initializable{
                 imgview = new ImageView(img);
                 Partida.idioma = Idiomas.SPANISH;
                 language.getChildren().add(imgview);
-            }catch(Exception e){
-                
-            }
+            }catch(Exception e){}
         }
     }
 
     @FXML
     private void singleplayer(MouseEvent event) {
+        Sonidos.clickTwo();
         singleplayer.setOpacity(0);
         multiplayer.setOpacity(0.85);
         jugadores = 1;
@@ -152,6 +158,7 @@ public class MainMenuController implements Initializable{
 
     @FXML
     private void multiplayer(MouseEvent event) {
+        Sonidos.clickTwo();
         multiplayer.setOpacity(0);
         singleplayer.setOpacity(0.85);
         jugadores = 2;
@@ -160,6 +167,8 @@ public class MainMenuController implements Initializable{
     
     @FXML
     private void empezarPartida(MouseEvent event) throws IOException {
+        
+        Sonidos.goButton();
         
         int n_filas = Integer.parseInt(rowsLabel.getText());
         int n_columnas = Integer.parseInt(columnsLabel.getText());
@@ -180,6 +189,7 @@ public class MainMenuController implements Initializable{
 
     @FXML
     private void minusBet(MouseEvent event) {
+        Sonidos.clickThree();
         int apuesta = Integer.parseInt(betLabel.getText());
         if(apuesta > 0) betLabel.setText(String.valueOf(apuesta-10));
         if(apuesta == 99) betLabel.setText(String.valueOf(apuesta-9));
@@ -187,8 +197,8 @@ public class MainMenuController implements Initializable{
 
     @FXML
     private void plusBet(MouseEvent event) {
-        
-        singleplayer.setOpacity(0);
+        Sonidos.clickThree();
+        singleplayer.setOpacity(0.25);
         multiplayer.setOpacity(0.85);
         jugadores = 1;
         
@@ -198,6 +208,7 @@ public class MainMenuController implements Initializable{
     }
 
     private void clickTimer(Pane p){
+        Sonidos.clickOne();
         p.setOpacity((p.getOpacity() == 0.25)?0.0:0.85);
         xtreme = !xtreme;
     }
